@@ -1,0 +1,7 @@
+{% extends 'main/base_ppl.html' %}
+{% load staticfiles %}
+{% block content %}
+{% load render_table from django_tables2 %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}" />
+{% render_table table2 %}
+{% endblock content %}

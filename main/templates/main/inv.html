@@ -1,0 +1,28 @@
+{% extends 'main/base_inv.html' %}
+{% load querystring %}
+{% block content %}
+<table>
+ <thead>
+	<tr>
+	 <th><a href="{% querystring table.prefixed_order_by_field=comp_name.order_by_alias.next %}">CompName</a></th>
+	 <th>UserName</th>
+	 <th>DateBoot</th>
+	 <th>UpdNeed</th>
+     <th>EsetNod</th>
+     <th>Date</th>
+	</tr>
+ </thead>
+{% for a in table %}
+	<tr>
+	 <td data-head='CompName'>{{ a.comp_name }}</td>
+	 <td data-head='UserName'>{{ a.user_name }}</td>
+     <td data-head='DateBoot'>{{ a.date_boot }}</td>
+     <td data-head='UpdNeed'>{{ a.upd_need }}</td>
+	 <td data-head='EsetNod'>{{ a.eset_nod }}</td>
+	 <td data-head='PubDate'>{{ a.date_now }}</td>
+	</tr>
+{% endfor %}
+ </tbody>
+</table>
+
+{% endblock content %}
