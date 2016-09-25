@@ -7,8 +7,19 @@
         </head>  
   <body>
         <div class="page-header">
-            <h1><a href="/">Django Girls Blog</a></h1>
+            <h1><a href="/inv">Django Girls Blog</a></h1>
         </div>
+        <table>
+ <thead>
+  <tr>
+   <th><a href="{% url 'sort' pk='comp_name' %}">CompName</a></th>
+   <th><a href="{% url 'sort' pk='user_name' %}">UserName</a></th>
+   <th><a href="{% url 'sort' pk='date_boot' %}">DateBoot</a></th>
+   <th><a href="{% url 'sort' pk='upd_need' %}">UpdNeed</a></th>
+     <th><a href="{% url 'sort' pk='eset_nod' %}">EsetNod</a></th>
+     <th><a href="{% url 'sort' pk='pub_date' %}">Date</a></th>
+  </tr>
+ </thead>
          {% block content %}
           {% endblock %}
     </body>

@@ -15,6 +15,8 @@ class PersonTable(tables.Table):
     date_upd = tables.Column(verbose_name='Last Update Check' ,localize=False)
     date_boot = tables.Column(localize=False)
     pub_date = tables.Column(localize=False)
+    def data(self):
+        return pub_date
 
 
 class PersonTable2(tables.Table):

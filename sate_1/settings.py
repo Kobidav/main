@@ -106,10 +106,10 @@ TIME_ZONE = 'Asia/Tel_Aviv'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = False
-#DATETIME_FORMAT = 'd.m.Y H:i:s'
+DATETIME_FORMAT = 'd.m.Y H:i:s'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

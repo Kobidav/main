@@ -1,13 +1,19 @@
 {% load staticfiles %}
     <html>
         <head>
-            <title>Django Girls blog</title>
+            <title>Info</title>
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
             <link rel="stylesheet" href="{% static 'css/main.css' %}">
             <link rel="stylesheet" href="{% static 'css/table.css' %}">
         </head>  
   <body>
         <div class="page-header">
             <h1><a href="/">Info</a></h1>
+            <h1><a href="{% url 'inv2' %}">HELLO</a></h1>
+        </div>
+        <div>
+        <p> <input type="submit" value="Clear" name="Clear"></p>
         </div>
          {% block content %}
           {% endblock %}
