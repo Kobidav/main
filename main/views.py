@@ -34,24 +34,23 @@ def Clear(request):
 
 def inv(request):
 
-    # table = PersonTable2(CompInv.objects.order_by('CompName').distinct())
-    # table = PersonTable2(CompInv.objects.all())
-    # RequestConfig(request).configure(table)
-    # table =
-    # CompInv.objects.filter(user_name__contains='Administrator').order_by('user_name')
     table = CompInv.objects.all()
+    #dic_name = {key.comp_name: (key.comp_name).replace('-','') for key in table}
+
+
     return render(request, 'main/inv.html', {'table': table})
 
 
 def inv2(request, pk):
-    pk_item = pk
-    Name = (CompInv.objects.get(pk=pk_item).comp_name)
+    #pk_item = pk
+    #Name = (CompInv.objects.get(pk=pk_item).comp_name)
+    Name = pk[0:-2] + "-" + pk[-2:]
     table = CompInv.objects.filter(comp_name__contains=Name)
     # table = CompInv.objects.all()
     return render(request, 'main/inv.html', {'table': table})
 
 
-def inv3(request, pk):
+def inv3(request, pk, num):
     Name = pk
 
     table = CompInv.objects.filter(user_name__contains=Name)
@@ -64,7 +63,4 @@ def sort(request, pk):
     table = CompInv.objects.all().order_by(Name)
     #table = new.table.order_by(Name)
     return render(request, 'main/inv.html', {'table': table})
-
-
-
 

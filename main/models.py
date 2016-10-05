@@ -50,7 +50,8 @@ class CompInv(models.Model):
     date_upd = models.DateTimeField()
     eset_nod = models.CharField(max_length=200)
     pub_date = models.DateTimeField()
-    date_now = models.DateTimeField()   
+    date_now = models.DateTimeField()
+    comp_name_shot = models.CharField(max_length=200)  
     
 
     def publish(self):
