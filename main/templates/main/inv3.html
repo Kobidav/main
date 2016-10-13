@@ -1,6 +1,38 @@
-{% extends 'main/base_inv.html' %}
+{% extends 'main/base_inv3.html' %}
 {% block content %}
-<table>
+      <table>
+ <thead>
+  <tr>
+   <th>Op System</th>
+   <th>Model</th>
+   <th>Service Tag</th>
+   <th>Prosessor</th>
+   <th>Memory</th>
+  </tr>
+ </thead>
+ {% for b in table_today %}
+<tr>
+	 <td data-head='CompName'><h3>{{ b.op_system }}</h3></td>
+	 <td data-head='UserName'><h3>{{ b.model_name }}</h3></td>
+     <td data-head='DateBoot'><h3>{{ b.service_tag }}</h3></td>
+     <td data-head='UpdNeed'><h3>{{ b.processor }}</h3></td>
+	 <td data-head='EsetNod'><h3>{{ b.memory }}</h3></td>
+	</tr>
+{% endfor %}
+ </tbody>
+</table>
+<<p></p>  
+ <table>
+ <thead>
+  <tr>
+   <th><a href="{% url 'sort_n' fsname='comp_name' svalue=name stype=ftype %}">CompName</a></th>
+   <th><a href="{% url 'sort_n' fsname='user_name' svalue=name stype=ftype %}">UserName</a></th>
+   <th><a href="{% url 'sort_n' fsname='date_boot' svalue=name stype=ftype %}">DateBoot</a></th>
+   <th><a href="{% url 'sort_n' fsname='upd_need' svalue=name stype=ftype %}">UpdNeed</a></th>
+   <th><a href="{% url 'sort_n' fsname='eset_nod' svalue=name stype=ftype %}">EsetNod</a></th>
+   <th><a href="{% url 'sort_n' fsname='pub_date' svalue=name stype=ftype %}">Date</a></th>
+  </tr>
+ </thead>
 
  {% for a in table %}
 	<tr>

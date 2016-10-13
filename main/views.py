@@ -26,12 +26,14 @@ def inv3(request, ffname, fvalue):
     # pk_item = pk
     # Name = (CompInv.objects.get(pk=pk_item).comp_name)
     # Name = pk[0:-2] + "-" + pk[-2:]
-    add_to_name = "Filtring"
     Name = fvalue
     ftype = ffname
+    add_to_name = "Filtring by " + fvalue
     table = CompInv.objects.filter(**{ftype: Name})
+    table_today = CompInv.objects.filter(**{
+        ftype: Name}).filter(pub_date__date=datetime.date.today())
     return render(request, 'main/inv3.html', {
-        'table': table, 'name': Name, 'add_to_name': add_to_name, 'ftype': ftype})
+        'table': table, 'name': Name, 'add_to_name': add_to_name, 'ftype': ftype, 'table_today': table_today})
 
 
 # def inv3(request, pk):
@@ -50,10 +52,21 @@ def sort_n(request, fsname, svalue, stype):
         table = CompInv.objects.filter(pub_date__date=datetime.date.today()).order_by(sSort)
     else:
         table = CompInv.objects.filter(**{ftype: Name}).order_by(sSort)
+        table_today = CompInv.objects.filter(**{
+        ftype: Name}).filter(pub_date__date=datetime.date.today())
+        if last_sort == "":
+            global last_sort
+            last_sort = "-"
+        elif last_sort == "-":
+            global last_sort
+            last_sort = ""
+        return render(request, 'main/inv3.html', {
+        'table': table, 'name': Name, 'add_to_name': add_to_name, 'ftype': ftype, 'table_today': table_today})
+
     if last_sort == "":
         global last_sort
         last_sort = "-"
-    else:
+    elif last_sort == "-":
         global last_sort
         last_sort = ""
     return render(request, 'main/sort_n.html', {
