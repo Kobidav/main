@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 
 
-
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
@@ -51,8 +50,7 @@ class CompInv(models.Model):
     eset_nod = models.CharField(max_length=200)
     pub_date = models.DateTimeField()
     date_now = models.DateTimeField()
-    comp_name_shot = models.CharField(max_length=200)  
-    
+    comp_name_shot = models.CharField(max_length=200)
 
     def publish(self):
         self.save()

@@ -37,8 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_tables2',
-    'django_filters',
     'main',
 
 )
@@ -91,7 +89,7 @@ DATABASES = {
         'NAME':'main',
         'USER':'django_user',
         'PASSWORD':'!@#$qwerASDF1234',
-        'HOST': 'localhost',
+        'HOST': '10.0.55.145',
         'PORT': '',
     }
 }

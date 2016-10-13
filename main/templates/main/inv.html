@@ -2,8 +2,8 @@
 {% block content %}
 {% for a in table %}
 	<tr>
-	 <td data-head='CompName'><h3><a href="{% url 'inv2' pk=a.comp_name_shot %}">{{ a.comp_name }}</a></h3></td>
-	 <td data-head='UserName'><h3><a href="{% url 'inv3' pk=a.user_name num=a.comp_name_shot %}">{{ a.user_name }}</a></h3></td>
+	 <td data-head='CompName'><h3><a href="{% url 'inv3' fvalue=a.comp_name ffname='comp_name' %}">{{ a.comp_name }}</a></h3></td>
+	 <td data-head='UserName'><h3><a href="{% url 'inv3' fvalue=a.user_name ffname='user_name' %}">{{ a.user_name }}</a></h3></td>
      <td data-head='DateBoot'>{{ a.date_boot }}</td>
      <td data-head='UpdNeed'>{{ a.upd_need }}</td>
 	 <td data-head='EsetNod'>{{ a.eset_nod }}</td>

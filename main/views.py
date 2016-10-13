@@ -2,10 +2,7 @@ from django.shortcuts import render
 from .models import Post
 from .models import CompInv
 from django.utils import timezone
-from django_tables2 import RequestConfig
-from .tables import PersonTable
-# from .tables import PersonTable2
-# from .forms import PostForm
+import datetime
 
 
 def units(request):
@@ -14,53 +11,50 @@ def units(request):
     return render(request, 'main/units.html', {'all_units': all_units})
 
 
-def people(request):
-    table2 = PersonTable(CompInv.objects.filter(
-        user_name__contains='Administrator').order_by('user_name'))
-    RequestConfig(request).configure(table2)
-    return render(request, 'main/people.html', {'table2': table2})
-
-
-def Clear(request):
-    table2 = PersonTable(CompInv.objects.filter(
-        user_name__contains='Administrator').order_by('user_name'))
-    RequestConfig(request).configure(table2)
-    return render(request, 'main/people.html', {'table2': table2})
-
-# def comp_inv(request):
-    # form = PostForm()
-    # return render(request, 'main/post_edit.html', {'form': form})
-
-
 def inv(request):
-
-    table = CompInv.objects.all()
-    #dic_name = {key.comp_name: (key.comp_name).replace('-','') for key in table}
-
-
-    return render(request, 'main/inv.html', {'table': table})
-
-
-def inv2(request, pk):
-    #pk_item = pk
-    #Name = (CompInv.objects.get(pk=pk_item).comp_name)
-    Name = pk[0:-2] + "-" + pk[-2:]
-    table = CompInv.objects.filter(comp_name__contains=Name)
-    # table = CompInv.objects.all()
-    return render(request, 'main/inv.html', {'table': table})
+    global last_sort
+    last_sort = ""
+    Name = "All"
+    add_to_name = "Main page"
+    ftype = "sort"
+    table = CompInv.objects.filter(pub_date__date=datetime.date.today())
+    return render(request, 'main/inv.html', {
+        'table': table, 'add_to_name': add_to_name, 'name': Name, 'ftype': ftype})
 
 
-def inv3(request, pk, num):
-    Name = pk
+def inv3(request, ffname, fvalue):
+    # pk_item = pk
+    # Name = (CompInv.objects.get(pk=pk_item).comp_name)
+    # Name = pk[0:-2] + "-" + pk[-2:]
+    add_to_name = "Filtring"
+    Name = fvalue
+    ftype = ffname
+    table = CompInv.objects.filter(**{ftype: Name})
+    return render(request, 'main/inv3.html', {
+        'table': table, 'name': Name, 'add_to_name': add_to_name, 'ftype': ftype})
 
-    table = CompInv.objects.filter(user_name__contains=Name)
-    # table = CompInv.objects.all()
-    return render(request, 'main/inv.html', {'table': table})
+
+# def inv3(request, pk):
+#     Name = pk
+#     table = CompInv.objects.filter(user_name__contains=Name)
+#     # table = CompInv.objects.all()
+#     return render(request, 'main/inv3.html', {'table': table, 'name': Name})
 
 
-def sort(request, pk):
-    Name = pk
-    table = CompInv.objects.all().order_by(Name)
-    #table = new.table.order_by(Name)
-    return render(request, 'main/inv.html', {'table': table})
-
+def sort_n(request, fsname, svalue, stype):
+    add_to_name = "Sorting"
+    ftype = stype
+    Name = svalue
+    sSort = last_sort + fsname
+    if Name == "All":
+        table = CompInv.objects.filter(pub_date__date=datetime.date.today()).order_by(sSort)
+    else:
+        table = CompInv.objects.filter(**{ftype: Name}).order_by(sSort)
+    if last_sort == "":
+        global last_sort
+        last_sort = "-"
+    else:
+        global last_sort
+        last_sort = ""
+    return render(request, 'main/sort_n.html', {
+        'table': table, 'name': Name, 'add_to_name': add_to_name, 'ftype': ftype})
