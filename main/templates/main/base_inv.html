@@ -1,25 +1,48 @@
 {% load staticfiles %}
     <html >
         <head>
-            <title> Django Girls blog </title>
+            <title> Comp Invent </title>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <!-- Optional theme -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
             <link rel = "stylesheet" href = "{% static 'css/main.css' %}" >
             <link rel = "stylesheet" href = "{% static 'css/table.css' %}" >
         </head>
   <body>
         <div class="page-header">
-            <h1><a href="/inv">Today {{add_to_name}}</a></h1>
+            <div align="left"><h1><a href="/inv">Today {{add_to_name}}</a><a href="/inv"> {{eset_v}} </a><a href="/warr"> WARR </a></h1></div>
+
         </div>
         <table>
  <thead>
-  <tr>
-   <th><a href="{% url 'sort_n' fsname='comp_name' svalue=name stype=ftype %}">CompName</a></th>
-   <th><a href="{% url 'sort_n' fsname='user_name' svalue=name stype=ftype %}">UserName</a></th>
-   <th><a href="{% url 'sort_n' fsname='date_boot' svalue=name stype=ftype %}">DateBoot</a></th>
-   <th><a href="{% url 'sort_n' fsname='upd_need' svalue=name stype=ftype %}">UpdNeed</a></th>
-   <th><a href="{% url 'sort_n' fsname='eset_nod' svalue=name stype=ftype %}">EsetNod</a></th>
-   <th><a href="{% url 'sort_n' fsname='pub_date' svalue=name stype=ftype %}">Date</a></th>
+  <tr bgcolor ="#1195b2">
+{% if add_to_name == "Main page" or add_to_name == "Wranings"%}
+{% for b in but_arr %}
+   <td>
+   <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt %}" class="btn-block btn btn-success "> {{ b.sys_field2 }} </a>
+   </td>
+{% endfor %}
+{%elif add_to_name == "Sorting"%}
+{% for b in but_arr %}
+   <td bgcolor>
+{% if last_srt == "+" and srt_f_name == b.sys_field1 %}
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-up"></span>{{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-up"></a>
+{%elif last_srt == "-" and srt_f_name == b.sys_field1 %}
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-down"></span>{{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-down"></a>
+{% else %}
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt %}" class="btn-block btn btn-success "> {{b.sys_field2}} </a>
+{% endif %}
+    </td>
+{% endfor %}
+{% endif %}
+ 
   </tr>
  </thead>
+
          {% block content %}
           {% endblock %}
     </body>

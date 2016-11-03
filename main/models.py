@@ -1,39 +1,4 @@
 from django.db import models
-from django.utils import timezone
-
-
-class Post(models.Model):
-    author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(
-        default=timezone.now)
-    published_date = models.DateTimeField(
-        blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
-
-    def __str__(self):
-        return self.title
-
-
-class Test_u(models.Model):
-    Field_1 = models.CharField(max_length=200)
-    Field_2 = models.CharField(max_length=200)
-    Field_3 = models.CharField(max_length=200)
-    Date_create = models.DateTimeField(
-        default=timezone.now)
-
-    def publish(self):
-        self.save()
-
-    def remove(self):
-        self.delete()
-
-    def __str__(self):
-        return self.Field_1
 
 
 class CompInv(models.Model):
@@ -45,9 +10,9 @@ class CompInv(models.Model):
     processor = models.CharField(max_length=200)
     memory = models.CharField(max_length=200)
     date_boot = models.DateTimeField()
-    upd_need = models.CharField(max_length=200)
+    upd_need = models.IntegerField()
     date_upd = models.DateTimeField()
-    eset_nod = models.CharField(max_length=200)
+    eset_nod = models.IntegerField()
     pub_date = models.DateTimeField()
     date_now = models.DateTimeField()
     comp_name_shot = models.CharField(max_length=200)
@@ -57,3 +22,15 @@ class CompInv(models.Model):
 
     def __str__(self):
         return self.comp_name
+
+
+class System(models.Model):
+    desc_name = models.CharField(max_length=200)
+    sys_field1 = models.CharField(max_length=200)
+    sys_field2 = models.CharField(max_length=200)
+    sys_field3 = models.CharField(max_length=200)
+    sys_field4 = models.CharField(max_length=200)
+    sys_field5 = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.desc_name + "(" + self.sys_field1 + ")"

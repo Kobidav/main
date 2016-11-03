@@ -11,27 +11,34 @@ table {
   width: 90%;
   box-shadow: 0 0 2px rgba(0,0,0,.4);
   border-collapse: collapse;
+
 }
 thead {
   
 }
 th {
   background: #1195b2;
-  color: #fff;
   font-weight: 400;
   padding: .7rem 0;
-  border: 3px solid #fff;
-  font-size: 1.5rem;
+  border: 3px solid #fff; 
+  font-size: 1.5 rem;
   font-variant: small-caps;
   width: 22%;
+  text-align: center;
 }
 /*th:last-child {width: 8%;} */
 tr:nth-child(even) {
   background: rgba(17,149,178,.2);
+
 }
-td {
+/*td {
   padding: .5rem 1rem;
   border-right: 1px solid rgba(0,0,0,.05);
+  border-left: 1px solid rgba(0,0,0,.05);
+  border-top: 1px solid rgba(0,0,0,.05);
+  border-bottom: 1px solid rgba(0,0,0,.05);
+  text-align: center; */
+
 }
 td:last-child {
   border-right: 0 none;
