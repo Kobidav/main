@@ -1,6 +1,36 @@
 {% extends 'main/base_inv3.html' %}
 {% block content %}
-      
+    <table>
+<thead>
+<tr>
+<td>
+  	<div class="btn-group">
+{% if show_data == "day_only" %}
+        <a href="{% url 'sort_n' fsname='comp_name' svalue=name stype=ftype lst_srt=last_srt shw_data='all_database' %}" class="btn btn-info disabled">Today only</a>
+        <a href="{% url 'sort_n' fsname='comp_name' svalue=name stype=ftype lst_srt=last_srt shw_data='all_database' %}" class="btn btn-primary disabled ">All Data</a>
+{% elif show_data == "all_database" %}
+        <a href="{% url 'sort_n' fsname='comp_name' svalue=name stype=ftype lst_srt=last_srt shw_data='day_only' %}" class="btn btn-primary disabled ">Today only</a>
+        <a href="{% url 'sort_n' fsname='comp_name' svalue=name stype=ftype lst_srt=last_srt shw_data='day_only' %}" class="btn btn-info disabled ">All Data</a>
+{% endif %}
+    </div>
+
+</td>
+<td>
+   <a href="{% url 'sort_n' fsname='comp_name' svalue='warr' stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn btn-primary ">Wranings</a>
+</td>
+<td>
+   <a href="#" class="btn btn-primary disabled "> Nod {{eset_v}}</a>
+</td>
+<td>
+   <a href="/inv" class="btn btn-primary "> Main Page</a>
+</td>
+<td>
+   <a href="/admin" class="btn btn-primary "> Admin</a>
+</td>
+</tr>
+</thead>
+
+</table>  
  <table>
   <thead>
   <tr bgcolor ="#1195b2">
@@ -8,18 +38,18 @@
 {% if add_to_name == "Main page" or add_to_name == "Wranings" or add_to_name == "Filtring by " %}
 {% for b in but_arr %}
    <td>
-   <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt %}" class="btn-block btn btn-success ">{{ b.sys_field2 }} </a>
+   <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success ">{{ b.sys_field2 }} </a>
    </td>
 {% endfor %}
 {%elif add_to_name == "Sorting" %}
 {% for b in but_arr %}
    <td bgcolor>
 {% if last_srt == "+" and srt_f_name == b.sys_field1 %}
-    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-up"></span>{{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-up"></a>
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-up"></span>{{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-up"></a>
 {%elif last_srt == "-" and srt_f_name == b.sys_field1 %}
-    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-down"></span>{{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-down"></a>
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-down"></span>{{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-down"></a>
 {% else %}
-    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt %}" class="btn-block btn btn-success ">{{b.sys_field2}}</a>
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success ">{{b.sys_field2}}</a>
 {% endif %}
     </td>
 {% endfor %}

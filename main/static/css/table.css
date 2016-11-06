@@ -31,13 +31,13 @@ tr:nth-child(even) {
   background: rgba(17,149,178,.2);
 
 }
-/*td {
+td {
   padding: .5rem 1rem;
   border-right: 1px solid rgba(0,0,0,.05);
   border-left: 1px solid rgba(0,0,0,.05);
   border-top: 1px solid rgba(0,0,0,.05);
   border-bottom: 1px solid rgba(0,0,0,.05);
-  text-align: center; */
+  text-align: center; 
 
 }
 td:last-child {

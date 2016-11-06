@@ -7,6 +7,9 @@ class Nod:
     def __init__(self, version, data):
         self.version = version
         self.data = data
+    def get(self):
+        url = "https://www.eset.com/us/threat-center/threatsense-updates/"
+        file_name = requests.get(url)
 
 
 url = "https://www.eset.com/us/threat-center/threatsense-updates/"
