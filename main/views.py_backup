@@ -6,13 +6,6 @@ import datetime
 from .nod import Eset_version
 
 
-def plus(last_sort):
-    if last_sort == "":
-        return "-"
-    elif last_sort == "-":
-        return "+"
-
-
 def inv(request):
     Name = "All"
     add_to_name = "Main page"
@@ -43,6 +36,31 @@ def inv(request):
         'filt_un': filters('user_name'),
         'show_data': show_data,
         'but_arr': but_arr})
+
+
+def inv3(request, ffname, fvalue):
+    Name = fvalue
+    ftype = ffname
+    last_srt = "+"
+    show_data = 'day_only'
+    add_to_name = "Filtring by "
+    but_arr = System.objects.filter(desc_name="sort_buttons_arrows")
+    table = CompInv.objects.filter(**{ftype: Name}).order_by('-pub_date')
+    table_today = CompInv.objects.filter(
+        **{ftype: Name}).filter(pub_date__date=datetime.date.today())
+    eset_d = Eset_version.data.date()
+    eset_v = Eset_version.version
+    return render(request, 'main/inv3.html', {
+        'table': table,
+        'name': Name,
+        'last_srt': last_srt,
+        'add_to_name': add_to_name,
+        'ftype': ftype,
+        'table_today': table_today,
+        'but_arr': but_arr,
+        'show_data': show_data,
+        'eset_d': eset_d,
+        'eset_v': eset_v})
 
 
 def sort_n(request, fsname, svalue, stype, lst_srt, shw_data):
@@ -77,11 +95,13 @@ def sort_n(request, fsname, svalue, stype, lst_srt, shw_data):
             eset_nod__lte=eset_check).filter(
             pub_date__gte=var_show_data).order_by(sSort)
     else:
-        table = CompInv.objects.filter(**{ftype: Name}).order_by(sSort)
+        table = CompInv.objects.filter(**{ftype: Name}).order_by(sSort)[0:3]
         table_today = CompInv.objects.filter(**{
             ftype: Name}).filter(pub_date__date=datetime.date.today())
-        last_sort = plus(last_sort)
-
+        if last_sort == "":
+            last_sort = "-"
+        elif last_sort == "-":
+            last_sort = "+"
         return render(request, 'main/inv3.html', {
             'table': table,
             'name': Name,
@@ -96,7 +116,10 @@ def sort_n(request, fsname, svalue, stype, lst_srt, shw_data):
             'eset_check': eset_check,
             'last_srt': last_sort})
 
-    last_sort = plus(last_sort)
+    if last_sort == "":
+        last_sort = "-"
+    elif last_sort == "-":
+        last_sort = "+"
     return render(request, 'main/sort_n.html', {
         'table': table,
         'name': Name,
@@ -113,3 +136,32 @@ def sort_n(request, fsname, svalue, stype, lst_srt, shw_data):
         'filt_un': filters('user_name')})
 
 
+def warr(request):
+    last_sort = "+"
+    Name = "warr"
+    add_to_name = "Wranings"
+    ftype = "sort"
+    srt_f_name = 'comp_name'
+    but_arr = System.objects.filter(desc_name="sort_buttons_arrows")
+    filters = lambda x: CompInv.objects.values_list(
+        x, flat=True).distinct().order_by(x)
+    table = CompInv.objects.exclude(
+        upd_need=0).filter(
+        pub_date__date=datetime.date.today()) | CompInv.objects.exclude(
+        eset_nod__gte=14360).filter(
+        pub_date__date=datetime.date.today())
+    Eset_version.get()
+    eset_d = Eset_version.data.date()
+    eset_v = Eset_version.version
+    return render(request, 'main/sort_n.html', {
+        'table': table,
+        'add_to_name': add_to_name,
+        'name': Name,
+        'ftype': ftype,
+        'srt_f_name': srt_f_name,
+        'last_srt': last_sort,
+        'eset_d': eset_d,
+        'eset_v': eset_v,
+        'but_arr': but_arr,
+        'filt_cn': filters('comp_name'),
+        'filt_un': filters('user_name')})
