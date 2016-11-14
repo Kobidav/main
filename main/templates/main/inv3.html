@@ -32,8 +32,80 @@
 
 </table>  
  <table>
-  <thead>
-  <tr bgcolor ="#1195b2">
+ <thead>
+<tr>
+</tr>
+<td>
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">{{name}} stasistic</a></li>
+    <li><a data-toggle="tab" href="#menu1">{{name}} Info</a></li>
+    <li><a data-toggle="tab" href="#menu2">New</a></li>
+  </ul>
+
+  <div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <table class="relative">
+
+<tr>
+{% if photo_url.url_name == "" or photo_url.url_name == "null" or photo_url.url_name == " "  %}
+<td rowspan="4"><img src= "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" height="169" width="169"></td>
+{% else%}
+<td rowspan="4"><img src="{{ photo_url.url_name }}"></td>
+{%endif%}
+</td>
+	 <td><p align="left">Name :</p></td>
+	 <td colspan="3"><p align="left"><b>{{photo_url.u_name}}</b></p></td>
+	</tr>
+	<tr>
+	<td><p align="left">Last Name :</p></td>
+	<td colspan="3"><p align="left"><b>{{photo_url.so_name}}</b></p></td>
+
+	</tr>
+	<tr>
+	<td> <p align="left">E-Mail :</p></td>
+	 <td colspan="3"><p align="left">{{photo_url.mail_name}}</p></td>
+
+	</tr>
+	<tr>
+<td><p align="left">SomeThing :</p></td>
+	 <td colspan="3"><p align="left">something</p></td>
+
+	</tr>
+
+ </tbody>
+</table>
+      
+     <table class="relative">
+ <thead>
+  <tr>
+   <td><button class="btn-block btn btn-primary disabled" type="button" >Op System
+    <span class="caret"></span></button></td>
+   <td><button class="btn-block btn btn-primary disabled" type="button" >Model
+    <span class="caret"></span></button></td>
+      <td><button class="btn-block btn btn-primary disabled" type="button" >Service Tag
+    <span class="caret"></span></button></td>
+       <td><button class="btn-block btn btn-primary disabled" type="button" >Prosessor
+    <span class="caret"></span></button></td>
+       <td><button class="btn-block btn btn-primary disabled" type="button" >Memory
+    <span class="caret"></span></button></td>
+  </tr>
+ </thead>
+<tr>
+	 <td data-head='CompName'>{{ table_today.op_system }}</td>
+	 <td data-head='UserName'>{{ table_today.model_name }}</td>
+     <td data-head='DateBoot'>{{ table_today.service_tag }}</td>
+     <td data-head='UpdNeed'>{{ table_today.processor }}</td>
+	 <td data-head='EsetNod'>{{ table_today.memory }}</td>
+	</tr>
+ </tbody>
+</table>
+
+    </div>
+    <div id="menu1" class="tab-pane fade">
+     <table class="relative"> 
+     <thead>
+     <tr bgcolor ="#1195b2">
 
 {% if add_to_name == "Main page" or add_to_name == "Wranings" or add_to_name == "Filtring by " %}
 {% for b in but_arr %}
@@ -57,7 +129,7 @@
  
   </tr>
  </thead>
-
+<tbody>
 
  {% for a in table %}
 	<tr>
@@ -69,27 +141,19 @@
 	 <td data-head='PubDate'>{{ a.date_now }}</td>
 	</tr>
 {% endfor %}
- </tbody>
 </table>
-<table>
- <thead>
-  <tr>
-   <th>Op System</th>
-   <th>Model</th>
-   <th>Service Tag</th>
-   <th>Prosessor</th>
-   <th>Memory</th>
-  </tr>
+    </div>
+    
+  </div>
+</div>
+
+</td>
+</tr>
  </thead>
- {% for b in table_today %}
-<tr>
-	 <td data-head='CompName'>{{ b.op_system }}</td>
-	 <td data-head='UserName'>{{ b.model_name }}</td>
-     <td data-head='DateBoot'>{{ b.service_tag }}</td>
-     <td data-head='UpdNeed'>{{ b.processor }}</td>
-	 <td data-head='EsetNod'>{{ b.memory }}</td>
-	</tr>
-{% endfor %}
- </tbody>
-</table>
+
+</table>   
+  <div id="menu2" class="tab-pane fade">
+  		
+  </div>
+
 {% endblock content %}

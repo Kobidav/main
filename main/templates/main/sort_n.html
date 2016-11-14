@@ -20,7 +20,7 @@
    <a href="{% url 'sort_n' fsname='comp_name' svalue='warr' stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn btn-primary ">Wranings</a>
 </td>
 <td>
-   <a href="#" class="btn btn-primary disabled "> Nod {{eset_v}}</a>
+   <a href="#" class="btn btn-primary disabled "> Nod {{eset_d.sys_field1}}</a>
 </td>
 <td>
    <a href="/inv" class="btn btn-primary "> Main Page</a>
@@ -34,32 +34,7 @@
 </table>
 
 <table>
- <thead>
-  <tr bgcolor ="#1195b2">
-
-{% if add_to_name == "Main page" or add_to_name == "Wranings"%}
-{% for b in but_arr %}
-   <td>
-   <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "> {{ b.sys_field2 }} </a>
-   </td>
-{% endfor %}
-{%elif add_to_name == "Sorting"%}
-{% for b in but_arr %}
-   <td bgcolor>
-{% if last_srt == "+" and srt_f_name == b.sys_field1 %}
-    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-up"></span> {{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-up"></a>
-{%elif last_srt == "-" and srt_f_name == b.sys_field1 %}
-    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-down"></span>{{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-down"></a>
-{% else %}
-    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success ">{{b.sys_field2}} </a>
-{% endif %}
-    </td>
-{% endfor %}
-{% endif %}
- 
-  </tr>
- </thead>
- <thead>
+<thead>
   <tr>
 {% for b in but_arr %}
 {% if b.sys_field3 == "drop_list" %}
@@ -96,6 +71,32 @@
  {%endfor%}
   </tr>
  </thead>
+ <thead>
+  <tr bgcolor ="#1195b2">
+
+{% if add_to_name == "Main page" or add_to_name == "Wranings"%}
+{% for b in but_arr %}
+   <td>
+   <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "> {{ b.sys_field2 }} </a>
+   </td>
+{% endfor %}
+{%elif add_to_name == "Sorting"%}
+{%for b in but_arr %}
+   <td bgcolor>
+{% if last_srt == "+" and srt_f_name == b.sys_field1 %}
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-up"></span> {{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-up"></a>
+{%elif last_srt == "-" and srt_f_name == b.sys_field1 %}
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "><span class="glyphicon glyphicon-menu-down"></span>{{ b.sys_field2 }}<span class="glyphicon glyphicon-menu-down"></a>
+{% else %}
+    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success ">{{b.sys_field2}} </a>
+{% endif %}
+    </td>
+{% endfor %}
+{% endif %}
+ 
+  </tr>
+ </thead>
+ 
 {% for a in table %}
 	<tr>
 	 <td data-head='CompName'><h3><a href="{% url 'sort_n' svalue=a.comp_name fsname='comp_name' stype='comp_name' lst_srt=last_srt shw_data=show_data %}">{{ a.comp_name }}</a></h3></td>
@@ -106,12 +107,14 @@
      {%else%}
      <td data-head='UpdNeed'>{{ a.upd_need }}</td>
      {% endif %}
-     {% if eset_check > a.eset_nod %}
+
+     {% if eset_d.sys_field6 > a.eset_nod %}
 	 <td data-head='EsetNod' bgcolor=#FF8080>{{ a.eset_nod}}</td>
 	 {%else%}
-	 <td data-head='EsetNod'>{{ a.eset_nod }}</td>
+	 <td data-head='EsetNod'>{{ a.eset_nod }} </td>
 	 {% endif %}
-	 <td data-head='PubDate'>{{ a.date_now }}</td>
+
+	 <td data-head='PubDate'>{{ a.pub_date }}</td>
 	</tr>
 {% endfor %}
  </tbody>

@@ -5,6 +5,14 @@ html{
   background: #fff;
   font-size: 1rem;
 }
+table.relative {
+    position: relative;
+
+    width: 100%;
+}
+
+
+
 table {
   table-layout: fixed;
   margin: 1rem auto;
@@ -14,6 +22,7 @@ table {
 
 }
 thead {
+
   
 }
 th {
@@ -68,4 +77,14 @@ td:last-child {
   td:nth-child(odd) {
     background: rgba(17,149,178,.15);
   }
+td.text {
+  text-align: left;
+
+
 }
+
+
+  
+}
+
+

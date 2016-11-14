@@ -20,10 +20,10 @@ string = soup.h2.text
 version = string[10:15]
 data = (string[17:-1]).replace(',', '')
 date_object = datetime.strptime(data, '%B %d %Y')
-#print (version)
-#print (date_object.date())
+#print (str(version))
+#print (str(date_object.date()))
 
-Eset_version = Nod(version, date_object)
-#print (Eset_version.version, Eset_version.data.date())
+Eset_version = Nod(str(version), str(date_object.date()))
+#print (Eset_version.version, Eset_version.data)
 
 
