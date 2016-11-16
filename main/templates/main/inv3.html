@@ -19,7 +19,7 @@
    <a href="{% url 'sort_n' fsname='comp_name' svalue='warr' stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn btn-primary ">Wranings</a>
 </td>
 <td>
-   <a href="#" class="btn btn-primary disabled "> Nod {{eset_v}}</a>
+   <a href="#" class="btn btn-primary disabled "> Nod {{eset_d.sys_field1}}</a>
 </td>
 <td>
    <a href="/inv" class="btn btn-primary "> Main Page</a>
@@ -38,9 +38,8 @@
 <td>
 <div class="container">
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">{{name}} stasistic</a></li>
-    <li><a data-toggle="tab" href="#menu1">{{name}} Info</a></li>
-    <li><a data-toggle="tab" href="#menu2">New</a></li>
+    <li class="active"><a data-toggle="tab" href="#home">{{name}} Info</a></li>
+    <li><a data-toggle="tab" href="#menu1">{{name}} Stat</a></li>
   </ul>
 
   <div class="tab-content">
@@ -54,21 +53,21 @@
 <td rowspan="4"><img src="{{ photo_url.url_name }}"></td>
 {%endif%}
 </td>
-	 <td><p align="left">Name :</p></td>
+	 <td class="btn btn-info btn-block disabled "><p align="left" >Name :</p></td>
 	 <td colspan="3"><p align="left"><b>{{photo_url.u_name}}</b></p></td>
 	</tr>
 	<tr>
-	<td><p align="left">Last Name :</p></td>
+	<td class="btn btn-info btn-block disabled "><p align="left">Last Name :</p></td>
 	<td colspan="3"><p align="left"><b>{{photo_url.so_name}}</b></p></td>
 
 	</tr>
 	<tr>
-	<td> <p align="left">E-Mail :</p></td>
+	<td class="btn btn-info btn-block disabled "> <p align="left">E-Mail :</p></td>
 	 <td colspan="3"><p align="left">{{photo_url.mail_name}}</p></td>
 
 	</tr>
 	<tr>
-<td><p align="left">SomeThing :</p></td>
+<td class="btn btn-info btn-block disabled "><p align="left">SomeThing :</p></td>
 	 <td colspan="3"><p align="left">something</p></td>
 
 	</tr>
@@ -80,7 +79,8 @@
  <thead>
   <tr>
    <td><button class="btn-block btn btn-primary disabled" type="button" >Op System
-    <span class="caret"></span></button></td>
+    <span class="caret"></span></button>
+    </td>
    <td><button class="btn-block btn btn-primary disabled" type="button" >Model
     <span class="caret"></span></button></td>
       <td><button class="btn-block btn btn-primary disabled" type="button" >Service Tag
@@ -138,7 +138,7 @@
      <td data-head='DateBoot'>{{ a.date_boot }}</td>
      <td data-head='UpdNeed'>{{ a.upd_need }}</td>
 	 <td data-head='EsetNod'>{{ a.eset_nod }}</td>
-	 <td data-head='PubDate'>{{ a.date_now }}</td>
+	 <td data-head='PubDate'>{{ a.pub_date }}</td>
 	</tr>
 {% endfor %}
 </table>
@@ -152,8 +152,6 @@
  </thead>
 
 </table>   
-  <div id="menu2" class="tab-pane fade">
-  		
-  </div>
+
 
 {% endblock content %}

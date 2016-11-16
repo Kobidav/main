@@ -15,8 +15,6 @@ class CompInv(models.Model):
     date_upd = models.DateTimeField()
     eset_nod = models.IntegerField()
     pub_date = models.DateTimeField()
-    date_now = models.DateTimeField()
-    comp_name_shot = models.CharField(max_length=200)
 
     def publish(self):
         self.save()

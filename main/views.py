@@ -15,13 +15,19 @@ def plus(last_sort):
 
 def inv(request):
     Name = "All"
-    add_to_name = "Main page"
+    add_to_name = "Main page today"
     ftype = "sort"
     last_srt = '+'
     srt_f_name = 'comp_name'
     show_data = 'day_only'
     table = CompInv.objects.filter(
         pub_date__date=datetime.date.today()).order_by('comp_name')
+    if not table.exists():
+        table = CompInv.objects.filter(
+            pub_date__date=(datetime.date.today() - datetime.timedelta(
+                days=1))).order_by(
+            'comp_name')
+        add_to_name = "Main page yesterday"
 
     System.get_nod()
     eset_d = System.objects.filter(desc_name="eset_nod_act_v")[0]
