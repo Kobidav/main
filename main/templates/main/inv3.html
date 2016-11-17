@@ -29,7 +29,45 @@
 </td>
 </tr>
 </thead>
-
+</table>
+<table>
+<thead>
+  <tr>
+{% for b in but_arr %}
+{% if b.sys_field3 == "drop_list" %}
+{% if b.sys_field1 == "comp_name" %}
+   <td>
+   <div class="dropdown">
+    <button class="btn-block btn btn-primary dropdown-toggle " type="button" data-toggle="dropdown">{{b.sys_field2}}
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+{% for c in filt_cn %}
+      <li><a href="{% url 'sort_n' svalue=c fsname='comp_name' stype='comp_name' lst_srt=last_srt shw_data=show_data %}">{{c}}</a></li>
+{% endfor %}
+    </ul>
+  </div>
+{%elif b.sys_field1 == "user_name" %}
+   <td>
+   <div class="dropdown">
+    <button class="btn-block btn btn-primary dropdown-toggle " type="button" data-toggle="dropdown">{{b.sys_field2}}
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+{% for c in filt_un %}
+      <li><a href="{% url 'sort_n' svalue=c fsname='user_name' stype='user_name' lst_srt=last_srt shw_data=show_data %}">{{c}}</a></li>
+{% endfor %}
+    </ul>
+  </div>
+{% endif %}
+{%elif b.sys_field3 == "Blank" %}
+    <td>
+   <div>
+    <button class="btn-block btn btn-primary disabled" type="button" >{{ b.sys_field2}}
+    <span class="caret"></span></button>
+  </div></td>
+ {%endif%}
+ {%endfor%}
+  </tr>
+ </thead>
 </table>  
  <table>
  <thead>
@@ -103,7 +141,7 @@
 
     </div>
     <div id="menu1" class="tab-pane fade">
-     <table class="relative"> 
+     <table class="relative, ">
      <thead>
      <tr bgcolor ="#1195b2">
 
@@ -152,6 +190,10 @@
  </thead>
 
 </table>   
+<form method="GET" class="post-form">
+    <input id="key" type="hidden" name="key" value="Hello">
 
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
 
 {% endblock content %}

@@ -51,6 +51,10 @@ def inv(request):
 
 def sort_n(request, fsname, svalue, stype, lst_srt, shw_data):
     add_to_name = "Sorting"
+    if request.method == "GET":
+        key = request.GET.get('key')
+        #add_to_name = key
+
     ftype = stype
     Name = svalue
     last_sort = lst_srt
@@ -106,7 +110,9 @@ def sort_n(request, fsname, svalue, stype, lst_srt, shw_data):
             'show_data': show_data,
             'eset_d': eset_d,
             'photo_url': photo_url,
-            'last_srt': last_sort})
+            'last_srt': last_sort,
+            'filt_cn': filters('comp_name'),
+            'filt_un': filters('user_name')})
 
     last_sort = plus(last_sort)
     return render(request, 'main/sort_n.html', {

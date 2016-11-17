@@ -74,7 +74,7 @@
  <thead>
   <tr bgcolor ="#1195b2">
 
-{% if add_to_name == "Main page" or add_to_name == "Wranings"%}
+{% if add_to_name == "Main page today" or add_to_name == "Wranings" or add_to_name == "Main page yesterday"%}
 {% for b in but_arr %}
    <td>
    <a href="{% url 'sort_n' fsname=b.sys_field1 svalue=name stype=ftype lst_srt=last_srt shw_data=show_data %}" class="btn-block btn btn-success "> {{ b.sys_field2 }} </a>
