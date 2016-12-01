@@ -39,12 +39,15 @@ def inv(request):
             table = CompInv.objects.filter(pub_date__date=(datetime.date.today() - datetime.timedelta(days=1)))
             System.objects.filter(desc_name='type_of_view').update(sys_field1="Yesterday")
 
-    System.Show_Data('day')
-    add_to_name = System.objects.filter(desc_name='type_of_view')[0]
+
+    
     eset_d = System.objects.filter(desc_name="eset_nod_act_v")[0]
     but_arr = System.objects.filter(desc_name="sort_buttons_arrows")
     filters = lambda x: CompInv.objects.values_list(
         x, flat=True).distinct().order_by(x)
+    if System.objects.get(desc_name="type_of_view").sys_field3 == System.objects.get(desc_name="type_of_view").sys_field4:
+        System.Show_Data('day')
+    add_to_name = System.objects.filter(desc_name='type_of_view')[0]
     return render(request, 'main/sort_n.html', {
         'table': table,
         'but_arr': but_arr,
