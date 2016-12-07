@@ -1,10 +1,11 @@
+from django.test import TestCase
+from django.core.urlresolvers import reverse
+
+from .models import CompInv
 
 
-from .models import PhotoBase
-from .get_photo import list_of_image
+class QuestionMethodTests(TestCase):
 
-
-UsersNames = PhotoBase.objects.values_list('u_name', flat=True).exclude(u_name='')
-UsersSurNames = PhotoBase.objects.values_list('so_name', flat=True).exclude(so_name='')
-
-print("hello")
+    def question(self):
+        response = self.client.get(reverse('inv'))
+        self.assertEqual(response.status_code, 200)

@@ -40,7 +40,7 @@ def inv(request):
             System.objects.filter(desc_name='type_of_view').update(sys_field1="Yesterday")
 
 
-    
+
     eset_d = System.objects.filter(desc_name="eset_nod_act_v")[0]
     but_arr = System.objects.filter(desc_name="sort_buttons_arrows")
     filters = lambda x: CompInv.objects.values_list(

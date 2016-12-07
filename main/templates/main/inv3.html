@@ -169,10 +169,10 @@
 	<tr>
 	 <td data-head='CompName'><h3><a href="{% url 'sort_n' svalue=a.comp_name  stype='comp_name' %}">{{ a.comp_name }}</a></h3></td>
 	 <td data-head='UserName'><h3><a href="{% url 'sort_n' svalue=a.user_name  stype='user_name' %}">{{ a.user_name }}</a></h3></td>
-     <td data-head='DateBoot'>{{ a.date_boot }}</td>
+     <td data-head='DateBoot'>{{ a.date_boot | date }}</td>
      <td data-head='UpdNeed'>{{ a.upd_need }}</td>
 	 <td data-head='EsetNod'>{{ a.eset_nod }}</td>
-	 <td data-head='PubDate'>{{ a.pub_date }}</td>
+	 <td data-head='PubDate'>{{ a.pub_date | date }}</td>
 	</tr>
 {% endfor %}
 </table>
