@@ -21,9 +21,11 @@ def inv(request):
             date_of_view = datetime.datetime.strptime(System_var.objects.get(desc_name='type_of_view').sys_field5, '%Y-%m-%d')
             table = CompInv.objects.filter(pub_date__gte=date_of_view).order_by(Sort_by)
             if not table.exists():
+                #table = CompInv.objects.filter(
+                    #pub_date__date=(datetime.date.today() - datetime.timedelta(days=1))).order_by(Sort_by)
                 table = CompInv.objects.filter(
-                    pub_date__date=(datetime.date.today() - datetime.timedelta(days=1))).order_by(Sort_by)
-                System_var.objects.filter(desc_name='type_of_view').update(sys_field1="Yesterday")
+                    pub_date__date=CompInv.objects.last().pub_date.order_by(Sort_by))
+                System_var.objects.filter(desc_name='type_of_view').update(sys_field1="Last record")
     else:
         System_var.Show_Data('default page')
 
@@ -34,8 +36,8 @@ def inv(request):
         table = CompInv.objects.filter(pub_date__gte=date_of_view)
         System_var.objects.filter(desc_name='type_of_view').update(sys_field1="Today")
         if not table.exists():
-            table = CompInv.objects.filter(pub_date__date=(datetime.date.today() - datetime.timedelta(days=1)))
-            System_var.objects.filter(desc_name='type_of_view').update(sys_field1="Yesterday")
+            table = CompInv.objects.filter(pub_date__date=CompInv.objects.last().pub_date)
+            System_var.objects.filter(desc_name='type_of_view').update(sys_field1="Last record")
 
 
     eset_d = System_var.objects.filter(desc_name="eset_nod_act_v").first()
