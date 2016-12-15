@@ -25,7 +25,10 @@ SECRET_KEY = ')!8gkee^u#0)(2=yz%&(7+hzrdmtitbg0gew_=2gn7z24h&m@m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+
 ALLOWED_HOSTS = ['10.0.55.139']
+
 
 
 # Application definition
@@ -94,7 +97,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
