@@ -1,0 +1,1 @@
+<testsuite errors="0" failures="0" name="Django Project Tests" skips="0" tests="1" time="34.163"><testcase classname="main.tests.MainPageTests" name="test_inv_variables_validation" time="34.008625" /></testsuite>

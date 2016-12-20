@@ -27,7 +27,7 @@ DEBUG = True
 
 
 
-ALLOWED_HOSTS = ['10.0.55.139']
+ALLOWED_HOSTS = ['10.0.55.143']
 
 
 
@@ -41,9 +41,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'django_jenkins',
     'django_extensions',
 
 )
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -93,7 +95,7 @@ DATABASES = {
         'NAME':'main',
         'USER':'django_user',
         'PASSWORD':'!@#$qwerASDF1234',
-        'HOST': '10.0.55.139',
+        'HOST': '10.0.55.143',
         'PORT': '',
     }
 }
