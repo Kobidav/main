@@ -27,7 +27,7 @@ DEBUG = True
 
 
 
-ALLOWED_HOSTS = ['10.0.55.143']
+ALLOWED_HOSTS = ['10.0.55.143','10.0.55.139']
 
 
 
@@ -95,7 +95,7 @@ DATABASES = {
         'NAME':'main',
         'USER':'django_user',
         'PASSWORD':'!@#$qwerASDF1234',
-        'HOST': '10.0.55.143',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }
