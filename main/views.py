@@ -24,7 +24,7 @@ def inv(request):
                 #table = CompInv.objects.filter(
                     #pub_date__date=(datetime.date.today() - datetime.timedelta(days=1))).order_by(Sort_by)
                 table = CompInv.objects.filter(
-                    pub_date__date=CompInv.objects.last().pub_date.order_by(Sort_by))
+                    pub_date__date=CompInv.objects.last().pub_date).order_by(Sort_by)
                 System_var.objects.filter(desc_name='type_of_view').update(sys_field1="Last record")
     else:
         System_var.Show_Data('default page')
