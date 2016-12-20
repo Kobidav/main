@@ -145,8 +145,7 @@
 {% for b in but_arr %}
    <td>
      <form method="GET" class="post-form">
-         <input id="stype" type="hidden"  name="stype" value={{stype}}>
-         <input id="svalue" type="hidden" name="svalue" value={{svalue}}>
+         
        <button id="field_name" type="submit" class="btn-block btn btn-success" name="field_name" value="{{b.sys_field1}}">
            <span class="glyphicon {{b.sys_field3}}"></span>
            {{b.sys_field2}}

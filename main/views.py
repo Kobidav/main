@@ -65,8 +65,10 @@ def sort_n(request, svalue, stype):
 
         if field_name:
 
-            svalue = request.GET.get('svalue')
-            stype = request.GET.get('stype')
+            #svalue = request.GET.get('svalue')
+            #stype = request.GET.get('stype')
+            svalue = svalue
+            stype = stype
             System_var.Sort_Update(field_name)
             Sort_by = System_var.objects.get(sys_field1=field_name).sys_field4 + field_name
             table = CompInv.objects.filter(**{stype: svalue}).filter(
