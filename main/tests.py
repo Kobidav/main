@@ -43,7 +43,7 @@ class MainPageTests(TestCase):
             print('today :', date_for_show)
         else:
             date_for_show = CompInv.objects.last().pub_date
-            print ('yesterday :', date_for_show)
+            print ('last record :', date_for_show)
         self.assertEqual(Get_site('inv').status_code, 200)
         for c in range(100):
             a = random.choice(Sort_button_names)
