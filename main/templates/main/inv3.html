@@ -83,7 +83,7 @@
     <table >
 
 <tr>
-{% if photo_url.url_name == "" or photo_url.url_name == "null" or photo_url.url_name == " "  %}
+{% if photo_url.url_name == "None" or photo_url.url_name == "" or photo_url.url_name == " "  %}
 <td rowspan="4"><img src= "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" height="169" width="169"></td>
 {% else%}
 <td rowspan="4"><img src="{{ photo_url.url_name }}"></td>
@@ -145,7 +145,7 @@
 {% for b in but_arr %}
    <td>
      <form method="GET" class="post-form">
-         
+
        <button id="field_name" type="submit" class="btn-block btn btn-success" name="field_name" value="{{b.sys_field1}}">
            <span class="glyphicon {{b.sys_field3}}"></span>
            {{b.sys_field2}}

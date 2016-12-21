@@ -29,7 +29,7 @@ class PhotoBase(models.Model):
     u_name = models.CharField(max_length=200)
     so_name = models.CharField(max_length=200)
     site_name = models.CharField(max_length=200)
-    url_name = models.CharField(max_length=1000)
+    url_name = models.CharField(max_length=1000,blank=True,null=True)
     mail_name = models.CharField(max_length=200)
 
     def __str__(self):

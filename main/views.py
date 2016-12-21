@@ -64,15 +64,15 @@ def sort_n(request, svalue, stype):
         field_name = request.GET.get('field_name')
 
         if field_name:
-
-            #svalue = request.GET.get('svalue')
-            #stype = request.GET.get('stype')
             svalue = svalue
             stype = stype
             System_var.Sort_Update(field_name)
             Sort_by = System_var.objects.get(sys_field1=field_name).sys_field4 + field_name
-            table = CompInv.objects.filter(**{stype: svalue}).filter(
+            if CompInv.objects.filter(**{stype: svalue}).count() > 7:
+                table = CompInv.objects.filter(**{stype: svalue}).filter(
                     pub_date__gte=(datetime.date.today() - datetime.timedelta(days=7))).order_by(Sort_by)
+            else:
+                table = CompInv.objects.filter(**{stype: svalue}).order_by(Sort_by)
             table_today = CompInv.objects.filter(**{stype: svalue}).latest('pub_date')
             collapse = ''
 
@@ -81,9 +81,13 @@ def sort_n(request, svalue, stype):
         stype = stype
         collapse = 'in'
 
-        table = CompInv.objects.filter(**{stype: svalue}).filter(
-                    pub_date__gte=(datetime.date.today() - datetime.timedelta(days=7)))
-        table_today = table.latest('pub_date')
+        if CompInv.objects.filter(**{stype: svalue}).count() > 7:
+            table = CompInv.objects.filter(**{stype: svalue}).filter(
+                pub_date__gte=(datetime.date.today() - datetime.timedelta(days=7)))
+        else:
+            table = CompInv.objects.filter(**{stype: svalue})
+
+        table_today = CompInv.objects.filter(**{stype: svalue}).latest('pub_date')
 
     if PhotoBase.objects.filter(sam_name=svalue).exists() or PhotoBase.objects.filter(sam_name=(table_today.user_name)).exists():
         if stype == 'user_name':
