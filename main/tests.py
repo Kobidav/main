@@ -42,7 +42,7 @@ class MainPageTests(TestCase):
             date_for_show = datetime.date.today()
             print('today :', date_for_show)
         else:
-            date_for_show = datetime.date.today() - datetime.timedelta(days=1)
+            date_for_show = CompInv.objects.last().pub_date
             print ('yesterday :', date_for_show)
         self.assertEqual(Get_site('inv').status_code, 200)
         for c in range(100):
