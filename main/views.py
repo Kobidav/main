@@ -105,6 +105,7 @@ def sort_n(request, svalue, stype):
         x, flat=True).distinct().order_by(x)
 
 
+
     return render(request, 'main/inv3.html', {
         'table': table,
         'svalue': svalue,
@@ -116,5 +117,6 @@ def sort_n(request, svalue, stype):
         'eset_d': eset_d,
         'photo_url': photo_url,
         'filt_cn': filters('comp_name'),
-        'filt_un': filters('user_name')})
+        'filt_un': filters('user_name')
+     })
 

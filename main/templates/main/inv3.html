@@ -56,7 +56,9 @@
     <span class="caret"></span></button>
     <ul class="dropdown-menu">
 {% for c in filt_un %}
-      <li><a href="{% url 'sort_n' svalue=c stype='user_name' %}">{{c}}</a></li>
+      <li>
+          <a href="{% url 'sort_n' svalue=c stype='user_name' %}">{{c}}</a>
+      </li>
 {% endfor %}
     </ul>
   </div>
