@@ -79,8 +79,9 @@ class System_var(models.Model):
                 sys_field4='btn-info disabled',
                 sys_field3='btn-primary')
         else:
+
             System_var.objects.filter(desc_name="type_of_view").update(
-                sys_field5=str(datetime.today().date()),
-                sys_field1='Day Only',
+                sys_field5=str(CompInv.objects.last().pub_date.date()),
+                sys_field1='Last Record',
                 sys_field3='btn-info disabled',
                 sys_field4='btn-primary')

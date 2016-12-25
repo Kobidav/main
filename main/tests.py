@@ -57,33 +57,19 @@ class MainPageTests(TestCase):
                 CompInv.objects.filter(pub_date__date=date_for_show).order_by(Sort_by)))
             self.assertEqual(table_sort, True)
         List_of_names = CompInv.objects.values_list('user_name', flat=True).distinct()
+
         for names in List_of_names:
+
             #print (names)
+
             self.assertEqual(self.client.get(reverse('sort_n', kwargs = {
                 'stype': 'user_name', 'svalue': names})).status_code, 200)
-            for c in range(100):
+            System_var.Sort_Update('zero')
+            for c in range(20):
                 a = random.choice(Sort_button_names)
                 Sort_button_press = self.client.get(reverse('sort_n', kwargs = {
                 'stype': 'user_name', 'svalue': names}),sys_field1=a)
                 self.assertEqual(Sort_button_press.status_code, 200)
-
-                Sort_by = System_var.objects.get(sys_field1=a).sys_field4 + a
-                print (Sort_by, "  :", c)
-                if CompInv.objects.filter(**{'user_name': names}).count() > 7:
-                    table = CompInv.objects.filter(**{'user_name': names}).filter(
-                        pub_date__gte=(datetime.datetime(2016,12,19) - datetime.timedelta(days=7))).order_by(Sort_by)
-                else:
-                    table = CompInv.objects.filter(**{'user_name': names}).order_by(Sort_by)
-                print (list(
-                    Sort_button_press.context[-1]['table'])[-1])
-                print ('***************************')
-                print (list(table)[-1])
-
-                table_sort = (list(
-                    Sort_button_press.context[-1]['table']) == list(table))
-                self.assertEqual(table_sort, True)
-
-
 
         List_of_comps = CompInv.objects.values_list('comp_name', flat=True).distinct()
         for comps in List_of_comps:
