@@ -45,13 +45,13 @@ class MainPageTests(TestCase):
             date_for_show = CompInv.objects.last().pub_date
             print ('last record :', date_for_show)
         self.assertEqual(Get_site('inv').status_code, 200)
-        for c in range(100):
+        for c in range(20):
             a = random.choice(Sort_button_names)
             Sort_button_press = Get_site('inv', field_name = a)
             self.assertEqual(Sort_button_press.status_code, 200)
 
-            Sort_by = System_var.objects.get(sys_field1=a).sys_field4 + a
-            #print (Sort_by, "  :", c)
+            Sort_by = System_var.objects.filter(desc_name='sort_buttons_arrows').get(sys_field1=a).sys_field4 + a
+            print (Sort_by, "  :", c)
             table_sort = (list(
                 Sort_button_press.context[-1]['table']) == list(
                 CompInv.objects.filter(pub_date__date=date_for_show).order_by(Sort_by)))
@@ -60,7 +60,7 @@ class MainPageTests(TestCase):
 
         for names in List_of_names:
 
-            #print (names)
+            print (names)
 
             self.assertEqual(self.client.get(reverse('sort_n', kwargs = {
                 'stype': 'user_name', 'svalue': names})).status_code, 200)
@@ -73,7 +73,7 @@ class MainPageTests(TestCase):
 
         List_of_comps = CompInv.objects.values_list('comp_name', flat=True).distinct()
         for comps in List_of_comps:
-            #print (comps)
+            print (comps)
             self.assertEqual(self.client.get(reverse('sort_n', kwargs={
                 'stype': 'comp_name', 'svalue': comps})).status_code, 200)
 

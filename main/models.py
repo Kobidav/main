@@ -63,7 +63,7 @@ class System_var(models.Model):
             return 'reset fields'
 
 
-        if System_var.objects.get(sys_field1=field_name).sys_field3 == 'glyphicon-menu-down':
+        if System_var.objects.filter(desc_name='sort_buttons_arrows').get(sys_field1=field_name).sys_field3 == 'glyphicon-menu-down':
             System_var.objects.filter(sys_field1=field_name).update(sys_field3='glyphicon-menu-up',sys_field4='')
             return field_name + ' up'
         else:

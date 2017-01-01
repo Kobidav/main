@@ -1,93 +1,24 @@
 {% extends 'main/base_inv3.html' %}
 {% block content %}
 
-<table>
-<thead>
-<tr>
-<td>
-  	<div class="btn-group">
-  <form method="GET" class="post-form">
-       <button id="day_all" type="submit" class="btn {{ add_to_name.sys_field3 }} " name="day_all" value="day_only">Day Only</button>
-       <button id="day_all" type="submit" class="btn {{ add_to_name.sys_field4 }} " name="day_all" value="all">All Data</button>
 
-
-</form>
-    </div>
-
-</td>
-
-<td>
-         <form method="GET" class="post-form">
-       <button id="nod_up" type="submit" class="btn btn-primary" name="nod_up" value="nod_up">
-           Nod {{eset_d.sys_field1}}
-       </button>
-
-
-</form>
-
-</td>
-<td>
-   <a href="/inv" class="btn btn-primary "> Main Page</a>
-</td>
-<td>
-   <a href="/admin" class="btn btn-primary "> Admin</a>
-</td>
-</tr>
-</thead>
-
-</table>
 
 <table>
-<thead>
-  <tr>
-{% for b in but_arr %}
-{% if b.sys_field5 == "drop_list" %}
-{% if b.sys_field1 == "comp_name" %}
-   <td>
-   <div class="dropdown">
-    <button class="btn-block btn btn-primary dropdown-toggle " type="button" data-toggle="dropdown">{{b.sys_field2}}
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-{% for c in filt_cn %}    
-      <li><a href="{% url 'sort_n' svalue=c stype='comp_name' %}">{{c}}</a></li>
-{% endfor %}
-    </ul>
-  </div>
-{%elif b.sys_field1 == "user_name" %}
-   <td>
-   <div class="dropdown">
-    <button class="btn-block btn btn-primary dropdown-toggle " type="button" data-toggle="dropdown">{{b.sys_field2}}
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        
-{% for c in filt_un %}    
-      <li><a href="{% url 'sort_n' svalue=c  stype='user_name' %} ">{{c}}</a></li>
-{% endfor %}
-    </ul>
-  </div>
-{% endif %}
-{%elif b.sys_field5 == "Blank" %}
-    <td>
-   <div>
-    <button class="btn-block btn btn-primary disabled" type="button" >{{ b.sys_field2}}
-    <span class="caret"></span></button>
-  </div></td>
- {%endif%}
- {%endfor%}
-  </tr>
- </thead>
  <thead>
   <tr bgcolor ="#1195b2">
 
 {% for b in but_arr %}
    <td>
      <form method="GET" class="post-form">
-       <button id="field_name" type="submit" class="btn-block btn btn-success" name="field_name" value="{{b.sys_field1}}">
+         {% if disable_button == "disabled" and b.sys_field2 == "Comp Name" %}
+       <button id="field_name" type="submit" class="btn-block btn btn-success " name="field_name" value="{{b.sys_field1}}">
+           {%else%}
+           <button id="field_name" type="submit" class="btn-block btn btn-success  {{disable_button}}" name="field_name" value="{{b.sys_field1}}">
+{%endif%}
            <span class="glyphicon {{b.sys_field3}}"></span>
            {{b.sys_field2}}
            <span class="glyphicon {{b.sys_field3}}"></span>
        </button>
-
 
 </form>
 

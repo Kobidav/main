@@ -1,0 +1,35 @@
+{% extends 'main/base_inv3.html' %}
+{% block info %}
+
+    <table >
+
+<tr>
+{% if photo_url.url_name == "None" or photo_url.url_name == "" or photo_url.url_name == " "  %}
+<td rowspan="4"><img src= "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" height="169" width="169"></td>
+{% else%}
+<td rowspan="4"><img src="{{ photo_url.url_name }}"></td>
+{%endif%}
+</td>
+	 <td class="btn btn-info btn-block disabled "><p align="left" >Name :</p></td>
+	 <td colspan="3"><p align="left"><b>{{photo_url.u_name}}</b></p></td>
+	</tr>
+	<tr>
+	<td class="btn btn-info btn-block disabled "><p align="left">Last Name :</p></td>
+	<td colspan="3"><p align="left"><b>{{photo_url.so_name}}</b></p></td>
+
+	</tr>
+	<tr>
+	<td class="btn btn-info btn-block " data-toggle="collapse" data-target="#hide-me"> <p align="left">E-Mail :</p></td>
+	 <td colspan="3"><p align="left">{{photo_url.mail_name}}</p></td>
+
+	</tr>
+	<tr>
+<td class="btn btn-info btn-block disabled "><p align="left">SomeThing :</p></td>
+	 <td colspan="3"><p align="left">something</p></td>
+
+	</tr>
+
+ </tbody>
+</table>
+
+{% endblock user_info %}
