@@ -5,9 +5,26 @@ from main.models import PhotoBase
 
 import datetime
 
+def hw_drop_list():
+    filters = lambda x: CompInv.objects.values_list(
+        x, flat=True).distinct().order_by(x)
+    but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
+    drop_list_of_hw = []
+    for a in but_arr_hw:
+        unit_id_dic = {}
+        for b in filters(a.sys_field1):
+            id_key = CompInv.objects.filter(**{a.sys_field1: b}).latest('pub_date').id
+            unit_id_dic[b] = id_key
+        drop_list_of_hw.append([a.sys_field1, a.sys_field2, (filters(a.sys_field1)), unit_id_dic])
+    return drop_list_of_hw
+
+
+
 def inv(request):
     field_name = None
+    Sort_by = []
     if request.method == "GET":
+       
         nod_up = request.GET.get('nod_up')
         if nod_up:
             System_var.get_nod()
@@ -18,15 +35,16 @@ def inv(request):
         if field_name:
             System_var.Sort_Update(field_name)
             Sort_by = [System_var.objects.filter(desc_name='sort_buttons_arrows').get(sys_field1=field_name).sys_field4 + field_name]
-            date_of_view = datetime.datetime.strptime(System_var.objects.get(desc_name='type_of_view').sys_field5, '%Y-%m-%d')
+            # date_of_view = datetime.datetime.strptime(System_var.objects.get(desc_name='type_of_view').sys_field5, '%Y-%m-%d')
 
     if not field_name:
+        System_var.Show_Data('today')
         System_var.Sort_Update('zero')
-        date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5, '%Y-%m-%d')
-        Sort_by =[]
+        # date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5, '%Y-%m-%d')
+        # Sort_by =[]
 
-
-
+    date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5,
+                                              '%Y-%m-%d')
     eset_d = System_var.objects.filter(desc_name="eset_nod_act_v").first()
     but_arr = System_var.objects.filter(desc_name="sort_buttons_arrows")
     filters = lambda x: CompInv.objects.values_list(
@@ -36,16 +54,8 @@ def inv(request):
     add_to_name = System_var.objects.filter(desc_name='type_of_view').first()
     table = CompInv.objects.filter(pub_date__gte=date_of_view).order_by(*Sort_by)
     but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
-    drop_list_of_hw =[]
-    for a in but_arr_hw:
-        unit_id_dic = {}
-        for b in filters(a.sys_field1):
-            id_key = CompInv.objects.filter(**{a.sys_field1: b}).latest('pub_date').id
-            unit_id_dic[b] = id_key
+    drop_list_of_hw = hw_drop_list()
 
-
-
-        drop_list_of_hw.append([a.sys_field1,a.sys_field2,(filters(a.sys_field1)),unit_id_dic])
 
     table_today = CompInv.objects.last()
     return render(request, 'main/sort_n.html', {
@@ -61,6 +71,7 @@ def inv(request):
 
 def sort_n(request, svalue, stype):
     field_name = None
+    Sort_by = []
     if request.method == "GET":
         nod_up = request.GET.get('nod_up')
         if nod_up:
@@ -68,8 +79,8 @@ def sort_n(request, svalue, stype):
         field_name = request.GET.get('field_name')
 
         if field_name:
-            svalue = svalue
-            stype = stype
+            # svalue = svalue
+            # stype = stype
             System_var.Sort_Update(field_name)
             Sort_by = [System_var.objects.filter(desc_name='sort_buttons_arrows').get(sys_field1=field_name).sys_field4 + field_name]
             collapse = ''
@@ -77,11 +88,13 @@ def sort_n(request, svalue, stype):
     if not field_name:
         System_var.Show_Data('day')
         System_var.Sort_Update('zero')
-        svalue = svalue
-        stype = stype
+        # svalue = svalue
+        # stype = stype
         collapse = 'in'
-        Sort_by=[]
+        # Sort_by=[]
 
+    svalue = svalue
+    stype = stype
     list_of_showing_data = list(CompInv.objects.filter(**{stype: svalue}).order_by('-pub_date').values_list('pub_date',flat=True)[0:8])
     table = CompInv.objects.filter(**{stype: svalue}).filter(pub_date__in=list_of_showing_data).order_by(*Sort_by)
     table_today = CompInv.objects.filter(**{stype: svalue}).latest('pub_date')
@@ -101,16 +114,7 @@ def sort_n(request, svalue, stype):
     filters = lambda x: CompInv.objects.values_list(
         x, flat=True).distinct().order_by(x)
     but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
-    drop_list_of_hw = []
-    for a in but_arr_hw:
-        unit_id_dic = {}
-        for b in filters(a.sys_field1):
-            id_key = CompInv.objects.filter(**{a.sys_field1: b}).latest('pub_date').id
-            unit_id_dic[b] = id_key
-
-        drop_list_of_hw.append([a.sys_field1, a.sys_field2, (filters(a.sys_field1)), unit_id_dic])
-
-
+    drop_list_of_hw = hw_drop_list()
 
 
     return render(request, 'main/sort_n.html', {
@@ -175,16 +179,7 @@ def hard(request, hwtype, hwvalue):
     filters = lambda x: CompInv.objects.values_list(
         x, flat=True).distinct().order_by(x)
     but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
-    drop_list_of_hw=[]
-    for a in but_arr_hw:
-        unit_id_dic = {}
-        for b in filters(a.sys_field1):
-            id_key = CompInv.objects.filter(**{a.sys_field1: b}).latest('pub_date').id
-            unit_id_dic[b] = id_key
-
-        drop_list_of_hw.append([a.sys_field1, a.sys_field2, (filters(a.sys_field1)), unit_id_dic])
-
-
+    drop_list_of_hw = hw_drop_list()
 
     return render(request, 'main/sort_n.html', {
         'table': table,
