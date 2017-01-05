@@ -72,16 +72,16 @@ class System_var(models.Model):
             System_var.objects.filter(sys_field1=field_name).update(sys_field3='glyphicon-menu-down')
             return field_name + ' down'
     def Show_Data(show_data):
-        if show_data== "all":
+        if show_data== "day_all":
             System_var.objects.filter(desc_name="type_of_view").update(
                 sys_field5='2016-10-19',
-                sys_field1='All Data',
-                sys_field4='btn-info disabled',
-                sys_field3='btn-primary')
+                sys_field1='Last Record',
+                sys_field3='day',
+                sys_field4='All Data')
         else:
 
             System_var.objects.filter(desc_name="type_of_view").update(
                 sys_field5=str(CompInv.objects.last().pub_date.date()),
-                sys_field1='Last Record',
-                sys_field3='btn-info disabled',
-                sys_field4='btn-primary')
+                sys_field1='All Data',
+                sys_field3='day_all',
+                sys_field4='Last Record+')

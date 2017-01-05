@@ -6,8 +6,11 @@ from main.models import PhotoBase
 import datetime
 
 def hw_drop_list():
+
+
     filters = lambda x: CompInv.objects.values_list(
         x, flat=True).distinct().order_by(x)
+
     but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
     drop_list_of_hw = []
     for a in but_arr_hw:
@@ -17,17 +20,39 @@ def hw_drop_list():
             unit_id_dic[b] = id_key
         drop_list_of_hw.append([a.sys_field1, a.sys_field2, (filters(a.sys_field1)), unit_id_dic])
     return drop_list_of_hw
-
+def hw_tooltip(table):
+    if type(table) is list:
+        comp_list =[]
+        for units in table:
+            comp_list.append(units.comp_name)
+    else:
+        comp_list=table.values_list("comp_name",flat=True)
+    list_of_hw_tooltip=[]
+    for comp in comp_list:
+        string_data = CompInv.objects.filter(comp_name=comp).latest('pub_date')
+        unit_of_list = " || ".join([
+            string_data.model_name,
+            string_data.processor,
+            string_data.memory,
+            string_data.service_tag])
+        list_of_hw_tooltip.append(unit_of_list)
+    table = zip(table, list_of_hw_tooltip)
+    list_of_hw_tooltip=[]
+    for a,b in table:
+        list_of_hw_tooltip.append([a,b])
+    return list_of_hw_tooltip
 
 
 def inv(request):
     field_name = None
     Sort_by = []
     if request.method == "GET":
-       
         nod_up = request.GET.get('nod_up')
         if nod_up:
             System_var.get_nod()
+        main_page = request.GET.get('inv')
+        if main_page:
+            System_var.Show_Data('today')
         day_all = request.GET.get('day_all')
         if day_all:
             System_var.Show_Data(day_all)
@@ -37,7 +62,7 @@ def inv(request):
             Sort_by = [System_var.objects.filter(desc_name='sort_buttons_arrows').get(sys_field1=field_name).sys_field4 + field_name]
             # date_of_view = datetime.datetime.strptime(System_var.objects.get(desc_name='type_of_view').sys_field5, '%Y-%m-%d')
 
-    if not field_name:
+    else:
         System_var.Show_Data('today')
         System_var.Sort_Update('zero')
         # date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5, '%Y-%m-%d')
@@ -55,6 +80,7 @@ def inv(request):
     table = CompInv.objects.filter(pub_date__gte=date_of_view).order_by(*Sort_by)
     but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
     drop_list_of_hw = hw_drop_list()
+    table = hw_tooltip(table)
 
 
     table_today = CompInv.objects.last()
@@ -95,6 +121,7 @@ def sort_n(request, svalue, stype):
 
     svalue = svalue
     stype = stype
+    disable_button = 'disabled'
     list_of_showing_data = list(CompInv.objects.filter(**{stype: svalue}).order_by('-pub_date').values_list('pub_date',flat=True)[0:8])
     table = CompInv.objects.filter(**{stype: svalue}).filter(pub_date__in=list_of_showing_data).order_by(*Sort_by)
     table_today = CompInv.objects.filter(**{stype: svalue}).latest('pub_date')
@@ -105,9 +132,6 @@ def sort_n(request, svalue, stype):
         elif stype == 'comp_name':photo_url = PhotoBase.objects.filter(sam_name=(table_today.user_name))[0]
     else:
         photo_url = PhotoBase.objects.filter(sam_name='no_user')[0]
-    System_var.objects.filter(desc_name="type_of_view").update(
-        sys_field4='btn-info disabled',
-        sys_field3='btn-info disabled')
     add_to_name = System_var.objects.filter(desc_name='type_of_view')[0]
     eset_d = System_var.objects.filter(desc_name="eset_nod_act_v")[0]
     but_arr = System_var.objects.filter(desc_name="sort_buttons_arrows")
@@ -115,6 +139,7 @@ def sort_n(request, svalue, stype):
         x, flat=True).distinct().order_by(x)
     but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
     drop_list_of_hw = hw_drop_list()
+    table = hw_tooltip(table)
 
 
     return render(request, 'main/sort_n.html', {
@@ -128,6 +153,7 @@ def sort_n(request, svalue, stype):
         'eset_d': eset_d,
         'photo_url': photo_url,
         'filt_un': filters('user_name'),
+        'disable_button': disable_button,
         'drop_list_of_hw': drop_list_of_hw
      })
 
@@ -170,9 +196,6 @@ def hard(request, hwtype, hwvalue):
     else:
         table = CompInv.objects.filter(**{hwtype: hwvalue}).order_by('-pub_date')
     table_today=CompInv.objects.filter(**{hwtype: hwvalue}).latest('pub_date')
-    System_var.objects.filter(desc_name="type_of_view").update(
-        sys_field4='btn-info disabled',
-        sys_field3='btn-info disabled')
     add_to_name = System_var.objects.filter(desc_name='type_of_view')[0]
     eset_d = System_var.objects.filter(desc_name="eset_nod_act_v")[0]
     but_arr = System_var.objects.filter(desc_name="sort_buttons_arrows")
@@ -180,6 +203,7 @@ def hard(request, hwtype, hwvalue):
         x, flat=True).distinct().order_by(x)
     but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
     drop_list_of_hw = hw_drop_list()
+    table = hw_tooltip(table)
 
     return render(request, 'main/sort_n.html', {
         'table': table,

@@ -3,7 +3,7 @@
 
 
 
-<table>
+<table class="table table-condensed table-striped table-bordered">
  <thead>
   <tr bgcolor ="#1195b2">
 
@@ -13,7 +13,7 @@
          {% if disable_button == "disabled" and b.sys_field2 == "Comp Name" %}
        <button id="field_name" type="submit" class="btn-block btn btn-success " name="field_name" value="{{b.sys_field1}}">
            {%else%}
-           <button id="field_name" type="submit" class="btn-block btn btn-success  {{disable_button}}" name="field_name" value="{{b.sys_field1}}">
+           <button id="field_name" type="submit" {{disable_button}} class="btn-block btn btn-success  " name="field_name" value="{{b.sys_field1}}">
 {%endif%}
            <span class="glyphicon {{b.sys_field3}}"></span>
            {{b.sys_field2}}
@@ -30,25 +30,26 @@
  
 {% for a in table %}
 	<tr>
-	 <td data-head='CompName'><h3><a href="{% url 'sort_n' svalue=a.comp_name stype='comp_name' %}">{{ a.comp_name }}</a></h3></td>
-	 <td data-head='UserName'><h3><a href="{% url 'sort_n' svalue=a.user_name stype='user_name' %}">{{ a.user_name }}</a></h3></td>
-     <td data-head='DateBoot'>{{ a.date_boot | date }}</td>
+	 <td data-head='CompName'><h4><a href="{% url 'sort_n' svalue=a.0.comp_name stype='comp_name' %}" data-toggle="tooltip"  title="{{a.1}}">{{ a.0.comp_name }}</a></h4></td>
+	 <td data-head='UserName'><h4><a href="{% url 'sort_n' svalue=a.0.user_name stype='user_name' %}">{{ a.0.user_name }}</a></h4></td>
+     <td data-head='DateBoot'>{{ a.0.date_boot | date }}</td>
      {% if a.upd_need > 0 %}
-     <td data-head='UpdNeed' bgcolor=#FF8080>{{ a.upd_need }}</td>
+     <td data-head='UpdNeed' class="danger">{{ a.0.upd_need }}</td>
      {%else%}
-     <td data-head='UpdNeed'>{{ a.upd_need }}</td>
+     <td data-head='UpdNeed'>{{ a.0.upd_need }}</td>
      {% endif %}
 
-     {% if eset_d.sys_field6 > a.eset_nod %}
-	 <td data-head='EsetNod' bgcolor=#FF8080>{{ a.eset_nod}}</td>
+     {% if eset_d.sys_field6 > a.0.eset_nod %}
+	 <td data-head='EsetNod' class="danger">{{ a.0.eset_nod}}</td>
 	 {%else%}
-	 <td data-head='EsetNod'>{{ a.eset_nod }} </td>
+	 <td data-head='EsetNod'>{{ a.0.eset_nod }} </td>
 	 {% endif %}
 
-	 <td data-head='PubDate'>{{ a.pub_date | date }}</td>
+	 <td data-head='PubDate'>{{ a.0.pub_date | date }}</td>
 	</tr>
 {% endfor %}
  </tbody>
 </table>
+</div>
 
 {% endblock content %}

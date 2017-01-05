@@ -9,15 +9,21 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
             <!-- Latest compiled and minified JavaScript -->
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-            <link rel = "stylesheet" href = "{% static 'css/main.css' %}" >
-            <link rel = "stylesheet" href = "{% static 'css/table.css' %}" >
+
+
 
         </head>
-  <table>
-        <div class="page-header">
-            <h1 align="center" >{{add_to_name.sys_field1}}</h1>
+<body>
+        <div class="row">
+     <div class="col-md-1"></div>
+     <div class="col-md-10">
+        <div class="panel panel-success " >
+            <div class="panel-heading"><h1  align="center" >{{add_to_name.sys_field4}}</h1></div>
         </div>
-        <table>
+
+
+
+        <table class="table table-bordered">
 <thead>
 <tr>
     <td>
@@ -33,20 +39,18 @@
   </div>
     </td>
 <td>
-  	<div class="btn-group">
-  <form method="GET" class="post-form">
-       <button id="day_all" type="submit" class="btn {{ add_to_name.sys_field3 }} " name="day_all" value="day_only">Day Only</button>
-       <button id="day_all" type="submit" class="btn {{ add_to_name.sys_field4 }} " name="day_all" value="all">All Data</button>
 
+  <form method="GET" class="post-form">
+       <button {{disable_button}} id="day_all" type="submit" class="btn btn-block btn-primary {{disable_button}}" name="day_all" value={{add_to_name.sys_field3}}>{{add_to_name.sys_field1}}</button>
 
 </form>
-    </div>
+
 
 </td>
 
 <td>
          <form method="GET" class="post-form">
-       <button id="nod_up" type="submit" class="btn btn-primary" name="nod_up" value="nod_up">
+       <button id="nod_up" type="submit" class="btn-block btn btn-primary" name="nod_up" value="nod_up">
            Nod {{eset_d.sys_field1}}
        </button>
 
@@ -55,11 +59,19 @@
 
 </td>
 <td>
-   <a href="/inv" class="btn btn-primary "> Main Page</a>
+
+    <form method="GET" class="post-form">
+       <button id="inv" type="submit" class="btn-block btn btn-primary" name="inv" value="inv">
+           Main Page
+       </button>
+
+
+</form>
+
 </td>
 
 <td>
-   <a href="/admin" class="btn btn-primary "> Admin</a>
+   <a href="/admin" class="btn btn-primary btn-block "> Admin</a>
 </td>
 </tr>
 </thead>
@@ -72,13 +84,13 @@
 
 
    <div id="hide-me" class="collapse {{collapse}}">
-    <table >
+    <table class="table table-bordered" >
 
 <tr>
 {% if photo_url.url_name == "None" or photo_url.url_name == "" or photo_url.url_name == " "  %}
-<td rowspan="4"><img src= "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" height="169" width="169"></td>
+<td rowspan="4" style="width: 17%;"><img class="img-rounded" src= "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" height="169" width="169"></td>
 {% else%}
-<td rowspan="4"><img src="{{ photo_url.url_name }}"></td>
+<td rowspan="4" style="width: 17%;"><img class="img-rounded" src="{{ photo_url.url_name }}"></td>
 {%endif%}
 </td>
 	 <td class="btn btn-info btn-block disabled "><p align="left" >Name :</p></td>
@@ -100,10 +112,10 @@
 
 	</tr>
 
- </tbody>
+
 </table>
  </div>
-     <table >
+     <table class="table table-bordered" >
  <thead>
  <tr>
  {% for b in drop_list_of_hw %}
@@ -141,10 +153,10 @@
 	 <td data-head='EsetNod'>{{ table_today.memory }}</td>
     <td data-head='CompName'>{{ table_today.comp_name }}</td>
 	</tr>
- </tbody>
-</table>
+
+</table >
 {% else %}
-  <table >
+  <table class="table table-bordered" >
  <thead>
  <tr>
  {% for b in drop_list_of_hw %}
@@ -182,13 +194,18 @@
 	 <td data-head='EsetNod'>{{ table_today.memory }}</td>
     <td data-head='CompName'>{{ table_today.comp_name }}</td>
 	</tr>
- </tbody>
+
 </table>
+
 {%endif%}
 
 
          {% block content %}
           {% endblock %}
+
+         </div>
+     <div class="col-md-1"></div>
+     </div>
     </body>
   
 </html>
