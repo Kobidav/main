@@ -27,7 +27,7 @@ DEBUG = True
 
 
 
-ALLOWED_HOSTS = ['10.0.55.143','10.0.55.139']
+ALLOWED_HOSTS = ['*']
 
 
 

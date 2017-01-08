@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from main.models import CompInv
 from main.models import System_var
 from main.models import PhotoBase
@@ -45,6 +45,7 @@ def hw_tooltip(table):
 
 def inv(request):
     field_name = None
+    main_page = None
     Sort_by = []
     if request.method == "GET":
         nod_up = request.GET.get('nod_up')
@@ -53,6 +54,7 @@ def inv(request):
         main_page = request.GET.get('inv')
         if main_page:
             System_var.Show_Data('today')
+            return redirect('/inv')
         day_all = request.GET.get('day_all')
         if day_all:
             System_var.Show_Data(day_all)
@@ -99,11 +101,14 @@ def sort_n(request, svalue, stype):
     field_name = None
     Sort_by = []
     if request.method == "GET":
+        main_page = request.GET.get('inv')
+        if main_page:
+            System_var.Show_Data('today')
+            return redirect('/inv')
         nod_up = request.GET.get('nod_up')
         if nod_up:
             System_var.get_nod()
         field_name = request.GET.get('field_name')
-
         if field_name:
             # svalue = svalue
             # stype = stype
@@ -161,6 +166,10 @@ def hard(request, hwtype, hwvalue):
     Sort_by =[]
     field_name = None
     if request.method == "GET":
+        main_page = request.GET.get('inv')
+        if main_page:
+            System_var.Show_Data('today')
+            return redirect('/inv')
         nod_up = request.GET.get('nod_up')
         if nod_up:
             System_var.get_nod()
