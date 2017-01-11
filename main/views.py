@@ -46,6 +46,7 @@ def hw_tooltip(table):
 def inv(request):
     field_name = None
     main_page = None
+    but_arr_hw = None
     Sort_by = []
     if request.method == "GET":
         nod_up = request.GET.get('nod_up')
