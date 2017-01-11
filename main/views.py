@@ -77,7 +77,10 @@ def inv(request):
         System_var.Show_Data('day')
     add_to_name = System_var.objects.filter(desc_name='type_of_view').first()
     table = CompInv.objects.filter(pub_date__gte=date_of_view).order_by(*Sort_by)
-    but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
+    if System_var.objects.filter(desc_name="sort_buttons_arrows_hw"):
+        but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
+    else:
+        System_var.Create_hw_tables()
     drop_list_of_hw = hw_drop_list()
     table = hw_tooltip(table)
 

@@ -50,19 +50,32 @@ class System_var(models.Model):
 
     def get_nod():
         Eset_version.get()
-        return System_var.objects.filter(desc_name="eset_nod_act_v").update(
-            sys_field1=Eset_version.version,
-            sys_field2=Eset_version.data,
-            sys_field6=int(Eset_version.version) - 10)
+        return System_var.objects.update_or_create(
+            desc_name="eset_nod_act_v", defaults={
+            'sys_field1':Eset_version.version,
+            'sys_field2':Eset_version.data,
+            'sys_field3':'',
+            'sys_field4':'Blank',
+            'sys_field5':'Blank',
+            'sys_field6':(int(Eset_version.version) - 10)})
 
     def Sort_Update(field_name):
         if field_name == 'zero':
-            for sys_f3 in System_var.objects.filter(
-                    desc_name='sort_buttons_arrows'):
-                System_var.objects.filter(
-                    sys_field1=sys_f3.sys_field1).update(
-                    sys_field3='', sys_field4='')
-            return 'reset fields'
+            list_of_fields={'comp_name':'Comp Name',
+                            'user_name':'User Name',
+                            'date_boot':'Date Boot',
+                            'upd_need':'Update Need',
+                            'eset_nod':'Nod Version',
+                            'pub_date': 'Date'}
+            for sys_field in list_of_fields:
+                System_var.objects.update_or_create(
+                    desc_name="sort_buttons_arrows", defaults={
+                        'sys_field1': sys_field,
+                        'sys_field2': list_of_fields[sys_field],
+                        'sys_field3': '',
+                        'sys_field4': '',
+                        'sys_field5': 'Blank',
+                        'sys_field6': 1})
 
         if System_var.objects.filter(
                 desc_name='sort_buttons_arrows').get(
@@ -84,16 +97,39 @@ class System_var(models.Model):
 
     def Show_Data(show_data):
         if show_data == "day_all":
-            System_var.objects.filter(
-                desc_name="type_of_view").update(
-                sys_field5='2016-10-19',
-                sys_field1='Last Record',
-                sys_field3='day',
-                sys_field4='All Data')
+            System_var.objects.update_or_create(
+                desc_name="type_of_view", defaults={
+                'sys_field5':'2016-10-19',
+                'sys_field1':'Last Record',
+                'sys_field3':'day',
+                'sys_field2': 'null',
+                'sys_field6': 1,
+                'sys_field4':'All Data'})
         else:
-            System_var.objects.filter(
-                desc_name="type_of_view").update(
-                sys_field5=str(CompInv.objects.last().pub_date.date()),
-                sys_field1='All Data',
-                sys_field3='day_all',
-                sys_field4='Last Record+')
+            System_var.objects.update_or_create(
+                desc_name="type_of_view", defaults={
+                'sys_field5':str(CompInv.objects.last().pub_date.date()),
+                'sys_field1':'All Data',
+                'sys_field3':'day_all',
+                'sys_field2': 'null',
+                'sys_field6': 1,
+                'sys_field4':'Last Record'})
+
+    def Create_hw_tables(self):
+        list_of_fields = {'op_system': 'System',
+                          'model_name': 'Model',
+                          'service_tag': 'Service Tag',
+                          'processor': 'Processor',
+                          'memory': 'Memory',
+                          'comp_name': 'Comp Name'}
+
+        for sys_field in list_of_fields:
+            System_var.objects.update_or_create(
+                desc_name="sort_buttons_arrows_hw", defaults={
+                    'sys_field1': sys_field,
+                    'sys_field2': list_of_fields[sys_field],
+                    'sys_field3': '',
+                    'sys_field4': '',
+                    'sys_field5': 'drop_list',
+                    'sys_field6': 0})
+
