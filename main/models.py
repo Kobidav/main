@@ -115,7 +115,7 @@ class System_var(models.Model):
                 'sys_field6': 1,
                 'sys_field4':'Last Record'})
 
-    def Create_hw_tables(self):
+    def Create_hw_tables():
         list_of_fields = {'op_system': 'System',
                           'model_name': 'Model',
                           'service_tag': 'Service Tag',
