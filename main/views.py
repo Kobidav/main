@@ -62,13 +62,10 @@ def inv(request):
         if field_name:
             System_var.Sort_Update(field_name)
             Sort_by = [System_var.objects.filter(desc_name='sort_buttons_arrows').get(sys_field1=field_name).sys_field4 + field_name]
-            # date_of_view = datetime.datetime.strptime(System_var.objects.get(desc_name='type_of_view').sys_field5, '%Y-%m-%d')
 
     else:
         System_var.Show_Data('today')
         System_var.Sort_Update('zero')
-        # date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5, '%Y-%m-%d')
-        # Sort_by =[]
 
     date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5,
                                               '%Y-%m-%d')
@@ -110,8 +107,6 @@ def sort_n(request, svalue, stype):
             System_var.get_nod()
         field_name = request.GET.get('field_name')
         if field_name:
-            # svalue = svalue
-            # stype = stype
             System_var.Sort_Update(field_name)
             Sort_by = [System_var.objects.filter(desc_name='sort_buttons_arrows').get(sys_field1=field_name).sys_field4 + field_name]
             collapse = ''
@@ -119,10 +114,7 @@ def sort_n(request, svalue, stype):
     if not field_name:
         System_var.Show_Data('day')
         System_var.Sort_Update('zero')
-        # svalue = svalue
-        # stype = stype
         collapse = 'in'
-        # Sort_by=[]
 
     svalue = svalue
     stype = stype
@@ -201,7 +193,6 @@ def hard(request, hwtype, hwvalue):
             c.append(b)
         table = c
 
-        #table = CompInv.objects.filter(**{hwtype: hwvalue}).filter(pub_date__gte=date_of_view).order_by('-pub_date')
     else:
         table = CompInv.objects.filter(**{hwtype: hwvalue}).order_by('-pub_date')
     table_today=CompInv.objects.filter(**{hwtype: hwvalue}).latest('pub_date')
