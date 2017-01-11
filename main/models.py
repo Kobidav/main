@@ -125,7 +125,7 @@ class System_var(models.Model):
 
         for sys_field in list_of_fields:
             System_var.objects.update_or_create(
-                desc_name="sort_buttons_arrows_hw", defaults={
+                desc_name="sort_buttons_arrows_hw", sys_field1= sys_field, defaults={
                     'sys_field1': sys_field,
                     'sys_field2': list_of_fields[sys_field],
                     'sys_field3': '',
