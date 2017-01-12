@@ -69,31 +69,32 @@ class System_var(models.Model):
                             'pub_date': 'Date'}
             for sys_field in list_of_fields:
                 System_var.objects.update_or_create(
-                    desc_name="sort_buttons_arrows", defaults={
+                    desc_name="sort_buttons_arrows", sys_field1= sys_field, defaults={
                         'sys_field1': sys_field,
                         'sys_field2': list_of_fields[sys_field],
                         'sys_field3': '',
                         'sys_field4': '',
                         'sys_field5': 'Blank',
                         'sys_field6': 1})
-
-        if System_var.objects.filter(
+        else:
+            if System_var.objects.filter(
                 desc_name='sort_buttons_arrows').get(
                 sys_field1=field_name).sys_field3 == 'glyphicon-menu-down':
-            System_var.objects.filter(
-                sys_field1=field_name).update(
-                sys_field3='glyphicon-menu-up', sys_field4='')
-            return field_name + ' up'
-        else:
-            for sys_f3 in System_var.objects.filter(
-                    desc_name='sort_buttons_arrows'):
                 System_var.objects.filter(
-                    sys_field1=sys_f3.sys_field1).update(
-                    sys_field3='', sys_field4='-')
-            System_var.objects.filter(
-                sys_field1=field_name).update(
-                sys_field3='glyphicon-menu-down')
-            return field_name + ' down'
+                    sys_field1=field_name).update(
+                    sys_field3='glyphicon-menu-up', sys_field4='')
+            else:
+                for sys_f3 in System_var.objects.filter(
+                        desc_name='sort_buttons_arrows'):
+                    System_var.objects.filter(
+                        sys_field1=sys_f3.sys_field1).update(
+                        sys_field3='', sys_field4='-')
+                System_var.objects.filter(
+                    sys_field1=field_name).update(
+                    sys_field3='glyphicon-menu-down')
+            
+
+
 
     def Show_Data(show_data):
         if show_data == "day_all":
@@ -132,4 +133,11 @@ class System_var(models.Model):
                     'sys_field4': '',
                     'sys_field5': 'drop_list',
                     'sys_field6': 0})
+    def install():
+        System_var.Show_Data('zero')
+        System_var.Create_hw_tables()
+        System_var.Sort_Update('zero')
+        System_var.get_nod()
+
+
 
