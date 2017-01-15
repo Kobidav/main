@@ -61,17 +61,17 @@ class System_var(models.Model):
 
     def Sort_Update(field_name):
         if field_name == 'zero':
-            list_of_fields={'comp_name':'Comp Name',
-                            'user_name':'User Name',
-                            'date_boot':'Date Boot',
-                            'upd_need':'Update Need',
-                            'eset_nod':'Nod Version',
-                            'pub_date': 'Date'}
+            list_of_fields=[['comp_name','Comp Name'],
+                            ['user_name','User Name'],
+                            ['date_boot','Date Boot'],
+                            ['upd_need','Update Need'],
+                            ['eset_nod','Nod Version'],
+                            ['pub_date', 'Date']]
             for sys_field in list_of_fields:
                 System_var.objects.update_or_create(
-                    desc_name="sort_buttons_arrows", sys_field1= sys_field, defaults={
-                        'sys_field1': sys_field,
-                        'sys_field2': list_of_fields[sys_field],
+                    desc_name="sort_buttons_arrows", sys_field1= sys_field[0], defaults={
+                        'sys_field1': sys_field[0],
+                        'sys_field2': sys_field[1],
                         'sys_field3': '',
                         'sys_field4': '',
                         'sys_field5': 'Blank',
@@ -117,18 +117,18 @@ class System_var(models.Model):
                 'sys_field4':'Last Record'})
 
     def Create_hw_tables():
-        list_of_fields = {'op_system': 'System',
-                          'model_name': 'Model',
-                          'service_tag': 'Service Tag',
-                          'processor': 'Processor',
-                          'memory': 'Memory',
-                          'comp_name': 'Comp Name'}
+        list_of_fields = [['op_system', 'System'],
+                          ['model_name', 'Model'],
+                          ['service_tag', 'Service Tag'],
+                          ['processor', 'Processor'],
+                          ['memory', 'Memory'],
+                          ['comp_name', 'Comp Name']]
 
         for sys_field in list_of_fields:
             System_var.objects.update_or_create(
-                desc_name="sort_buttons_arrows_hw", sys_field1= sys_field, defaults={
-                    'sys_field1': sys_field,
-                    'sys_field2': list_of_fields[sys_field],
+                desc_name="sort_buttons_arrows_hw", sys_field1= sys_field[0], defaults={
+                    'sys_field1': sys_field[0],
+                    'sys_field2': sys_field[1],
                     'sys_field3': '',
                     'sys_field4': '',
                     'sys_field5': 'drop_list',

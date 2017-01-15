@@ -47,6 +47,7 @@ def inv(request):
     field_name = None
     main_page = None
     but_arr_hw = None
+    date_of_view = None
     Sort_by = []
     if request.method == "GET":
         nod_up = request.GET.get('nod_up')
@@ -68,9 +69,20 @@ def inv(request):
         System_var.Show_Data('today')
         System_var.Sort_Update('zero')
 
-    date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5,
+    if System_var.objects.filter(desc_name='type_of_view'):
+        date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5,
                                               '%Y-%m-%d')
-    eset_d = System_var.objects.filter(desc_name="eset_nod_act_v").first()
+    else:
+        System_var.Show_Data('today')
+        date_of_view = datetime.datetime.strptime(
+            System_var.objects.filter(desc_name='type_of_view').first().sys_field5,
+            '%Y-%m-%d')
+
+    if System_var.objects.filter(desc_name="eset_nod_act_v"):
+        eset_d = System_var.objects.filter(desc_name="eset_nod_act_v").first()
+    else:
+        System_var.get_nod()
+        eset_d = System_var.objects.filter(desc_name="eset_nod_act_v").first()
     but_arr = System_var.objects.filter(desc_name="sort_buttons_arrows")
     filters = lambda x: CompInv.objects.values_list(
         x, flat=True).distinct().order_by(x)
