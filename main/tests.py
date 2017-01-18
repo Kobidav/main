@@ -2,6 +2,8 @@
 from django.core.urlresolvers import reverse
 from .models import CompInv, System_var, PhotoBase
 from django.test import TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium.webdriver.firefox.webdriver import WebDriver
 import random
 
 
@@ -64,7 +66,7 @@ def hw_tooltip(table):
         list_of_hw_tooltip.append([a, b])
     return list_of_hw_tooltip
 
-class MainPageTests(TestCase):
+class MainPageTests(StaticLiveServerTestCase):
     def test_base_load(self):
         def get_site(site, **kwargs):
             response = self.client.get(reverse(site), kwargs)
@@ -73,7 +75,7 @@ class MainPageTests(TestCase):
         date_for_show = CompInv.objects.last().pub_date
         print ('last record :', date_for_show)
         # main page test**
-        print ('Block 1 :',len(CompInv.objects.all()))
+        print ('test_base_load :',len(CompInv.objects.all()))
         System_var.install()
         self.assertEqual(get_site('inv').status_code, 200)
     def test_first(self):
@@ -83,7 +85,7 @@ class MainPageTests(TestCase):
         upp_base(self)
         date_for_show = CompInv.objects.last().pub_date
 
-        print('Block 2',len(CompInv.objects.all()))
+        print('test_first',len(CompInv.objects.all()))
         for c in range(count_of_check):
             random_fields_press = random.choice(Sort_button_names)
             sort_button_press = get_site('inv', field_name = random_fields_press)
@@ -102,7 +104,7 @@ class MainPageTests(TestCase):
     def test_names_pages(self):
         upp_base(self)
         date_for_show = CompInv.objects.last().pub_date
-        print('Block 3',len(CompInv.objects.all()))
+        print('test_names_pages',len(CompInv.objects.all()))
         list_of_names = CompInv.objects.values_list('user_name', flat=True).distinct()
         for names in list_of_names:
         # user pages test**
@@ -131,19 +133,34 @@ class MainPageTests(TestCase):
                 'stype': 'user_name', 'svalue': names}),sys_field1=random_fields_press)
         # users pages context sorting test ****
                 self.assertEqual(sort_button_press.status_code, 200)
+
         #**********************************
     def test_comp_pages(self):
         upp_base(self)
         date_for_show = CompInv.objects.last().pub_date
-        print('Block 4 ',len(CompInv.objects.all()))
+        print('test_comp_pages ',len(CompInv.objects.all()))
         list_of_comps = CompInv.objects.values_list('comp_name', flat=True).distinct()
 
         for comps in list_of_comps:
         # comps pages test**
             self.assertEqual(self.client.get(reverse('sort_n', kwargs={
                 'stype': 'comp_name', 'svalue': comps})).status_code, 200)
+
+            sort_button_press = self.client.get(reverse('sort_n', kwargs={
+                'stype': 'comp_name', 'svalue': comps}))
+            sort_by = []
+            list_of_showing_data = list(CompInv.objects.filter(
+                comp_name=comps).order_by(
+                '-pub_date').values_list(
+                'pub_date', flat=True)[0:8])
+            table = CompInv.objects.filter(comp_name=comps).filter(
+                pub_date__in=list_of_showing_data).order_by(
+                *sort_by)
+            table = hw_tooltip(table)
+            table_sort = sort_button_press.context[-1]['table'] == table
+            # users pages context test ****
+            self.assertEqual(table_sort, True)
         #*****************************
-            System_var.Sort_Update('zero')
             for c in range(count_of_check):
                 random_fields_press = random.choice(Sort_button_names)
                 sort_button_press = self.client.get(reverse('sort_n', kwargs = {
@@ -154,12 +171,13 @@ class MainPageTests(TestCase):
     def test_hw_drop_pages(self):
         upp_base(self)
         date_for_show = CompInv.objects.last().pub_date
-        print('Block 5 ',len(CompInv.objects.all()))
+        print('test_hw_drop_pages ',len(CompInv.objects.all()))
         for hw_drop_module in hw_drop_list():
             for key in hw_drop_module[3]:
                 link_hw_drop_menu = self.client.get(reverse('hard', kwargs={
                     'hwtype': hw_drop_module[0], 'hwvalue': hw_drop_module[3][key]}))
                 self.assertEqual(link_hw_drop_menu.status_code, 200)
+
 
 
 

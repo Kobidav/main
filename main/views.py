@@ -134,7 +134,7 @@ def sort_n(request, svalue, stype):
 
     svalue = svalue
     stype = stype
-    disable_button = 'disabled'
+    disable_button = ''
     list_of_showing_data = list(CompInv.objects.filter(**{stype: svalue}).order_by('-pub_date').values_list('pub_date',flat=True)[0:8])
     table = CompInv.objects.filter(**{stype: svalue}).filter(pub_date__in=list_of_showing_data).order_by(*Sort_by)
     table_today = CompInv.objects.filter(**{stype: svalue}).latest('pub_date')
