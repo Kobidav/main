@@ -107,9 +107,13 @@ class System_var(models.Model):
                 'sys_field6': 1,
                 'sys_field4':'All Data'})
         else:
+            if CompInv.objects.last():
+                date_str = str(CompInv.objects.last().pub_date.date())
+            else:
+                data_str = str(datetime.today().date())
             System_var.objects.update_or_create(
                 desc_name="type_of_view", defaults={
-                'sys_field5':str(CompInv.objects.last().pub_date.date()),
+                'sys_field5':date_str,
                 'sys_field1':'All Data',
                 'sys_field3':'day_all',
                 'sys_field2': 'null',
