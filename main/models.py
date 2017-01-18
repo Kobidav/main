@@ -110,7 +110,7 @@ class System_var(models.Model):
             if CompInv.objects.last():
                 date_str = str(CompInv.objects.last().pub_date.date())
             else:
-                data_str = str(datetime.today().date())
+                date_str = str(datetime.today().date())
             System_var.objects.update_or_create(
                 desc_name="type_of_view", defaults={
                 'sys_field5':date_str,
