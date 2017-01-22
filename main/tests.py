@@ -5,6 +5,7 @@ from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
 import random
+import pdb
 
 
 import datetime
@@ -31,6 +32,7 @@ def upp_base(self):
     for l in PhotoBase_dic:
         m = PhotoBase.objects.create(**l)
         m.save()
+    System_var.install()
 def hw_drop_list():
     filters = lambda x: CompInv.objects.values_list(
         x, flat=True).distinct().order_by(x)
@@ -67,6 +69,17 @@ def hw_tooltip(table):
     return list_of_hw_tooltip
 
 class MainPageTests(StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(MainPageTests, cls).setUpClass()
+        cls.selenium = WebDriver()
+        cls.selenium.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(MainPageTests, cls).tearDownClass()
+
     def test_base_load(self):
         def get_site(site, **kwargs):
             response = self.client.get(reverse(site), kwargs)
@@ -76,7 +89,31 @@ class MainPageTests(StaticLiveServerTestCase):
         print ('last record :', date_for_show)
         # main page test**
         print ('test_base_load :',len(CompInv.objects.all()))
-        System_var.install()
+        self.selenium.get('%s%s' % (self.live_server_url, "/inv"))
+        assert "Comp Inv" in self.selenium.title
+        if self.selenium.find_element_by_xpath('//button[@value="inv"]'):
+            print ("exist")
+            self.selenium.find_element_by_xpath('//button[@value="inv"]').click()
+        if not self.selenium.find_element_by_xpath('//button[@value="comp_name"]'):
+            print("comp_name not exist")
+        else:
+            print("comp_name exist, click")
+            self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
+            self.selenium.save_screenshot('/home/sysop/Desktop/screenshot.png')
+            pdb.set_trace()
+        self.selenium.implicitly_wait(5)
+        if not self.selenium.find_element_by_xpath('//button[@value="comp_name"]'):
+            print("comp_name 2 not exist")
+        else:
+            print("comp_name 2 exist, click")
+            self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
+            self.selenium.save_screenshot('/home/sysop/Desktop/screenshot2.png')
+            pdb.set_trace()
+        self.selenium.implicitly_wait(5)
+
+
+
+
         self.assertEqual(get_site('inv').status_code, 200)
     def test_first(self):
         def get_site(site, **kwargs):
@@ -181,24 +218,27 @@ class MainPageTests(StaticLiveServerTestCase):
 
 
 
-class SeleniumTests(StaticLiveServerTestCase):
-    @classmethod
-    def setUpClass(cls):
-        super(SeleniumTests, cls).setUpClass()
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
+# class SeleniumTests(StaticLiveServerTestCase):
+#     @classmethod
+#     def setUpClass(cls):
+#         super(SeleniumTests, cls).setUpClass()
+#         cls.selenium = WebDriver()
+#         cls.selenium.implicitly_wait(10)
+#
+#     @classmethod
+#     def tearDownClass(cls):
+#         cls.selenium.quit()
+#         super(SeleniumTests, cls).tearDownClass()
+#
+#     def test_login(self):
+#         upp_base(self)
+#
+#         print (self.live_server_url)
+#         self.selenium.get('%s%s' % (self.live_server_url, "/inv"))
+#         assert "Comp Inv" in self.selenium.title
+#         self.selenium.find_element_by_xpath('//button[@value="inv"]').click()
+#         self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
+#         self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
+#         self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.selenium.quit()
-        super(SeleniumTests, cls).tearDownClass()
-
-    def test_login(self):
-        print (self.live_server_url)
-        self.selenium.get('%s%s' % (self.live_server_url, "/inv"))
-       # username_input = self.selenium.find_element_by_name("username")
-       # username_input.send_keys('myuser')
-       # password_input = self.selenium.find_element_by_name("password")
-       # password_input.send_keys('secret')
-       # self.selenium.find_element_by_xpath('//input[@value="Log in"]').click()
 
