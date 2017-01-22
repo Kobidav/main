@@ -5,10 +5,10 @@ from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
 import random
-import pdb
 
 
-import datetime
+
+import datetime, time
 
 def Field_to_None(list_in, field):
     for a in list_in:
@@ -90,6 +90,7 @@ class MainPageTests(StaticLiveServerTestCase):
         # main page test**
         print ('test_base_load :',len(CompInv.objects.all()))
         self.selenium.get('%s%s' % (self.live_server_url, "/inv"))
+        time.sleep(15)
         assert "Comp Inv" in self.selenium.title
         if self.selenium.find_element_by_xpath('//button[@value="inv"]'):
             print ("exist")
@@ -99,17 +100,17 @@ class MainPageTests(StaticLiveServerTestCase):
         else:
             print("comp_name exist, click")
             self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
+            time.sleep(7)
             self.selenium.save_screenshot('/home/sysop/Desktop/screenshot.png')
-            pdb.set_trace()
-        self.selenium.implicitly_wait(5)
+
         if not self.selenium.find_element_by_xpath('//button[@value="comp_name"]'):
             print("comp_name 2 not exist")
         else:
             print("comp_name 2 exist, click")
             self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
+            time.sleep(7)
             self.selenium.save_screenshot('/home/sysop/Desktop/screenshot2.png')
-            pdb.set_trace()
-        self.selenium.implicitly_wait(5)
+
 
 
 
@@ -218,27 +219,6 @@ class MainPageTests(StaticLiveServerTestCase):
 
 
 
-# class SeleniumTests(StaticLiveServerTestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         super(SeleniumTests, cls).setUpClass()
-#         cls.selenium = WebDriver()
-#         cls.selenium.implicitly_wait(10)
-#
-#     @classmethod
-#     def tearDownClass(cls):
-#         cls.selenium.quit()
-#         super(SeleniumTests, cls).tearDownClass()
-#
-#     def test_login(self):
-#         upp_base(self)
-#
-#         print (self.live_server_url)
-#         self.selenium.get('%s%s' % (self.live_server_url, "/inv"))
-#         assert "Comp Inv" in self.selenium.title
-#         self.selenium.find_element_by_xpath('//button[@value="inv"]').click()
-#         self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
-#         self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
-#         self.selenium.find_element_by_xpath('//button[@value="comp_name"]').click()
+
 
 
