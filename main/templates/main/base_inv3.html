@@ -118,7 +118,8 @@
      <table class="table table-bordered" >
  <thead>
  <tr>
- {% for b in drop_list_of_hw %}
+{% spaceless %}
+{% for b in drop_list_of_hw %}
 
 
    <td>
@@ -143,6 +144,7 @@
   </div>
 </td>
 {% endfor %}
+{% endspaceless %}
 </tr>
  </thead>
 <tr>
@@ -159,6 +161,7 @@
   <table class="table table-bordered" >
  <thead>
  <tr>
+     {% spaceless %}
  {% for b in drop_list_of_hw %}
 
 
@@ -182,6 +185,7 @@
   </div>
 </td>
 {% endfor %}
+{% endspaceless %}
 
 </tr>
  </thead>

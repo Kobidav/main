@@ -56,6 +56,7 @@ def inv(request):
         main_page = request.GET.get('inv')
         if main_page:
             System_var.Show_Data('today')
+            System_var.Sort_Update('zero')
             return redirect('/inv')
         day_all = request.GET.get('day_all')
         if day_all:
