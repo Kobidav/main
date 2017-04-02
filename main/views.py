@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
-from main.models import CompInv
-from main.models import System_var
-from main.models import PhotoBase
+from main.models import CompInv # main database quory
+from main.models import System_var # system verables
+from main.models import PhotoBase # photo links
 
 import datetime
 
-def hw_drop_list():
+def hw_drop_list(): # Hadrware drop menu 
 
 
     filters = lambda x: CompInv.objects.values_list(
-        x, flat=True).distinct().order_by(x)
+        x, flat=True).distinct().order_by(x) #drop menu generator 
 
     but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
     drop_list_of_hw = []
@@ -18,9 +18,10 @@ def hw_drop_list():
         for b in filters(a.sys_field1):
             id_key = CompInv.objects.filter(**{a.sys_field1: b}).latest('pub_date').id
             unit_id_dic[b] = id_key
-        drop_list_of_hw.append([a.sys_field1, a.sys_field2, (filters(a.sys_field1)), unit_id_dic])
+        drop_list_of_hw.append([a.sys_field1, a.sys_field2, (filters(a.sys_field1)), unit_id_dic]) 
+        # append  [field name, Title Name, lisf of elements, list of elements id for urls]
     return drop_list_of_hw
-def hw_tooltip(table):
+def hw_tooltip(table): # tooltip generator 
     if type(table) is list:
         comp_list =[]
         for units in table:
@@ -43,22 +44,22 @@ def hw_tooltip(table):
     return list_of_hw_tooltip
 
 
-def inv(request):
+def inv(request):  # main page 
     field_name = None
     main_page = None
     but_arr_hw = None
     date_of_view = None
     Sort_by = []
-    if request.method == "GET":
-        nod_up = request.GET.get('nod_up')
+    if request.method == "GET": # GET recived
+        nod_up = request.GET.get('nod_up') # Nod button pressed
         if nod_up:
             System_var.get_nod()
-        main_page = request.GET.get('inv')
+        main_page = request.GET.get('inv') # Inv button pressed
         if main_page:
             System_var.Show_Data('today')
             System_var.Sort_Update('zero')
             return redirect('/inv')
-        day_all = request.GET.get('day_all')
+        day_all = request.GET.get('day_all') # All data button pressed
         if day_all:
             System_var.Show_Data(day_all)
         field_name = request.GET.get('field_name')
@@ -66,11 +67,11 @@ def inv(request):
             System_var.Sort_Update(field_name)
             Sort_by = [System_var.objects.filter(desc_name='sort_buttons_arrows').get(sys_field1=field_name).sys_field4 + field_name]
 
-    else:
+    else: # No GET recived
         System_var.Show_Data('today')
         System_var.Sort_Update('zero')
 
-    if System_var.objects.filter(desc_name='type_of_view'):
+    if System_var.objects.filter(desc_name='type_of_view'): # choose date for showing
         date_of_view = datetime.datetime.strptime(System_var.objects.filter(desc_name='type_of_view').first().sys_field5,
                                               '%Y-%m-%d')
     else:
@@ -79,24 +80,24 @@ def inv(request):
             System_var.objects.filter(desc_name='type_of_view').first().sys_field5,
             '%Y-%m-%d')
 
-    if System_var.objects.filter(desc_name="eset_nod_act_v"):
+    if System_var.objects.filter(desc_name="eset_nod_act_v"): # generate Nod data
         eset_d = System_var.objects.filter(desc_name="eset_nod_act_v").first()
     else:
         System_var.get_nod()
         eset_d = System_var.objects.filter(desc_name="eset_nod_act_v").first()
-    but_arr = System_var.objects.filter(desc_name="sort_buttons_arrows")
+    but_arr = System_var.objects.filter(desc_name="sort_buttons_arrows") # Quory of arrows of sorting 
     filters = lambda x: CompInv.objects.values_list(
-        x, flat=True).distinct().order_by(x)
+        x, flat=True).distinct().order_by(x) # Drop list generating
     if System_var.objects.get(desc_name="type_of_view").sys_field3 == System_var.objects.get(desc_name="type_of_view").sys_field4:
         System_var.Show_Data('day')
-    add_to_name = System_var.objects.filter(desc_name='type_of_view').first()
-    table = CompInv.objects.filter(pub_date__gte=date_of_view).order_by(*Sort_by)
+    add_to_name = System_var.objects.filter(desc_name='type_of_view').first() # Title of page
+    table = CompInv.objects.filter(pub_date__gte=date_of_view).order_by(*Sort_by) # generate quote of data
     if System_var.objects.filter(desc_name="sort_buttons_arrows_hw"):
         but_arr_hw = System_var.objects.filter(desc_name="sort_buttons_arrows_hw")
     else:
-        System_var.Create_hw_tables()
+        System_var.Create_hw_tables() # generate HardWare data
     drop_list_of_hw = hw_drop_list()
-    table = hw_tooltip(table)
+    table = hw_tooltip(table) # generate HardWare drop block 
 
 
     table_today = CompInv.objects.last()
@@ -111,7 +112,7 @@ def inv(request):
         'drop_list_of_hw': drop_list_of_hw
     })
 
-def sort_n(request, svalue, stype):
+def sort_n(request, svalue, stype): # Sorting
     field_name = None
     Sort_by = []
     if request.method == "GET":
@@ -171,7 +172,7 @@ def sort_n(request, svalue, stype):
         'drop_list_of_hw': drop_list_of_hw
      })
 
-def hard(request, hwtype, hwvalue):
+def hard(request, hwtype, hwvalue): # Hardware page
     Sort_by =[]
     field_name = None
     if request.method == "GET":
