@@ -48,7 +48,7 @@ class System_var(models.Model):
     def __str__(self):
         return self.desc_name + "(" + self.sys_field1 + ")"
 
-    def get_nod():
+    def get_nod(): # update and generate Nod data
         Eset_version.get()
         return System_var.objects.update_or_create(
             desc_name="eset_nod_act_v", defaults={
@@ -59,8 +59,8 @@ class System_var(models.Model):
             'sys_field5':'Blank',
             'sys_field6':(int(Eset_version.version) - 10)})
 
-    def Sort_Update(field_name):
-        if field_name == 'zero':
+    def Sort_Update(field_name): # Sorting marks
+        if field_name == 'zero': # Reset sorting
             list_of_fields=[['comp_name','Comp Name'],
                             ['user_name','User Name'],
                             ['date_boot','Date Boot'],
@@ -76,14 +76,14 @@ class System_var(models.Model):
                         'sys_field4': '',
                         'sys_field5': 'Blank',
                         'sys_field6': 1})
-        else:
+        else: # sorting by 'field_name' arrows down
             if System_var.objects.filter(
                 desc_name='sort_buttons_arrows').get(
                 sys_field1=field_name).sys_field3 == 'glyphicon-menu-down':
                 System_var.objects.filter(
                     sys_field1=field_name).update(
                     sys_field3='glyphicon-menu-up', sys_field4='')
-            else:
+            else: # sorting by 'field_name' arrows up
                 for sys_f3 in System_var.objects.filter(
                         desc_name='sort_buttons_arrows'):
                     System_var.objects.filter(
@@ -96,8 +96,8 @@ class System_var(models.Model):
 
 
 
-    def Show_Data(show_data):
-        if show_data == "day_all":
+    def Show_Data(show_data): # Show data today, yearsttoday, or all 
+        if show_data == "day_all": # all data
             System_var.objects.update_or_create(
                 desc_name="type_of_view", defaults={
                 'sys_field5':'2016-10-19',
@@ -106,7 +106,7 @@ class System_var(models.Model):
                 'sys_field2': 'null',
                 'sys_field6': 1,
                 'sys_field4':'All Data'})
-        else:
+        else: # today or yearstoday
             if CompInv.objects.last():
                 date_str = str(CompInv.objects.last().pub_date.date())
             else:
@@ -137,7 +137,7 @@ class System_var(models.Model):
                     'sys_field4': '',
                     'sys_field5': 'drop_list',
                     'sys_field6': 0})
-    def install():
+    def install(): # generate default system variables
         System_var.Show_Data('zero')
         System_var.Create_hw_tables()
         System_var.Sort_Update('zero')
