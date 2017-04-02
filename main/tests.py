@@ -10,7 +10,7 @@ import random
 
 import datetime, time
 
-def Field_to_None(list_in, field):
+def Field_to_None(list_in, field): # cleaning ID fields
     for a in list_in:
         a[field] = None
     return list_in
@@ -18,11 +18,12 @@ def Field_to_None(list_in, field):
 CompInv_dic = Field_to_None(list(CompInv.objects.values()),'id')
 System_var_dic = Field_to_None(list(System_var.objects.values()),'id')
 PhotoBase_dic = Field_to_None(list(PhotoBase.objects.values()),'url_name')
+#^^^ save database data 
 Sort_button_names=('comp_name','user_name','date_boot','upd_need','eset_nod','pub_date')
 count_of_check = 1
 
 
-def upp_base(self):
+def upp_base(self): # load saved database
     for l in CompInv_dic:
         m = CompInv.objects.create(**l)
         m.save()
