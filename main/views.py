@@ -54,6 +54,11 @@ def inv(request):  # main page
         nod_up = request.GET.get('nod_up') # Nod button pressed
         if nod_up:
             System_var.get_nod()
+        rem = request.GET.get('rem')
+        if rem:
+            rem_per = datetime.datetime.today().date() - datetime.timedelta(150)
+            CompInv.objects.filter(pub_date__lte=rem_per).delete()
+
         main_page = request.GET.get('inv') # Inv button pressed
         if main_page:
             System_var.Show_Data('today')
@@ -107,6 +112,7 @@ def inv(request):  # main page
         'but_arr_hw': but_arr_hw,
         'but_arr': but_arr,
         'add_to_name': add_to_name,
+        'rec_count': CompInv.objects.count(),
         'eset_d': eset_d,
         'filt_un': filters('user_name'),
         'drop_list_of_hw': drop_list_of_hw

@@ -41,7 +41,7 @@
 <td>
 
   <form method="GET" class="post-form">
-       <button {{disable_button}} id="day_all" type="submit" class="btn btn-block btn-primary {{disable_button}}" name="day_all" value={{add_to_name.sys_field3}}>{{add_to_name.sys_field1}}</button>
+       <button {{disable_button}} id="day_all" type="submit" class="btn btn-block btn-primary {{disable_button}}" name="day_all" value={{add_to_name.sys_field3}}>{{add_to_name.sys_field1}} {{rec_count}}</button>
 
 </form>
 
@@ -58,17 +58,31 @@
 </form>
 
 </td>
+
 <td>
 
     <form method="GET" class="post-form">
        <button id="inv" type="submit" class="btn-block btn btn-primary" name="inv" value="inv">
-           Main Page
+           Main Page 
        </button>
 
 
 </form>
 
 </td>
+<td>
+
+    <form method="GET" class="post-form">
+       <button id="rem" type="submit" class="btn-block btn btn-primary" name="rem" value="rem">
+           Rem old rec 
+       </button>
+
+
+</form>
+
+</td>
+
+
 
 <td>
    <a href="/admin" class="btn btn-primary btn-block "> Admin</a>
